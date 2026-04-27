@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_doctor_registration_tree" model="ir.ui.view">
+        <field name="name">doctor.registration.tree</field>
+        <field name="model">doctor.registration</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="email" optional="show"/>
+                <field name="phone" optional="hide"/>
+                <field name="country_id" optional="show"/>
+                <field name="specialty" optional="show"/>
+                <field name="license_number" optional="show"/>
+                <field name="license_expiry_date" optional="show"/>
+                <field name="reminder_1_days" optional="hide"/>
+                <field name="reminder_2_days" optional="hide"/>
+                <field name="experience" optional="hide"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_doctor_registration_form" model="ir.ui.view">
+        <field name="name">doctor.registration.form</field>
+        <field name="model">doctor.registration</field>
+        <field name="arch" type="xml">
+            <form string="Doctor Registration Request">
+                <header>
+                    <button string="Approve"
+                            name="action_approve"
+                            type="object"
+                            class="btn-primary"
+                            groups="adx_doctor_registration_portal.group_doctor_manager"
+                            invisible="status != 'pending'"/>
+                    <button string="Reject"
+                            name="action_open_reject_wizard"
+                            type="object"
+                            class="btn-secondary"
+                            groups="adx_doctor_registration_portal.group_doctor_manager"
+                            invisible="status != 'pending'"/>
+                    <field name="status" widget="statusbar"
+                           statusbar_visible="pending,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_user"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user"
+                                invisible="not user_id">
+                            <field name="user_id" string="User" widget="statinfo"/>
+                        </button>
+                    </div>
+
+                    <group>
+                        <group string="Basic Information">
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="specialty"/>
+                            <field name="experience"/>
+                            <field name="country_id"/>
+                        </group>
+                        <group string="License Information">
+                            <field name="license_number"/>
+                            <field name="license_document" filename="license_filename" invisible="1"/>
+                            <field name="license_document_ids" widget="many2many_binary" string="License Documents"/>
+                            <field name="license_expiry_date"/>
+                        </group>
+                        <group string="Reminder Status" invisible="status != 'approved'">
+                            <label for="reminder_1_days" string="Reminder 1"/>
+                            <div class="d-flex align-items-center gap-2">
+                                <field name="reminder_1_days" nolabel="1" style="max-width:80px;"/>
+                                <span class="text-muted">days</span>
+                            </div>
+                            <label for="reminder_2_days" string="Reminder 2"/>
+                            <div class="d-flex align-items-center gap-2">
+                                <field name="reminder_2_days" nolabel="1" style="max-width:80px;"/>
+                                <span class="text-muted">days</span>
+                            </div>
+                        </group>
+                    </group>
+                    <group string="Registration Status Details" invisible="status == 'pending'">
+                        <field name="approval_date" readonly="1" invisible="status != 'approved'"/>
+                        <field name="approved_by" readonly="1" invisible="status != 'approved'"/>
+                        <field name="rejection_date" readonly="1" invisible="status != 'rejected'"/>
+                        <field name="rejected_by" readonly="1" invisible="status != 'rejected'"/>
+                        <field name="rejection_reason" readonly="1" invisible="status != 'rejected'"/>
+                    </group>
+                    <group string="Compliance Information">
+                        <field name="compliance_id" readonly="1"/>
+                        <field name="compliance_accepted"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_doctor_registration_search" model="ir.ui.view">
+        <field name="name">doctor.registration.search</field>
+        <field name="model">doctor.registration</field>
+        <field name="arch" type="xml">
+            <search string="Doctor Registration">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="license_number"/>
+                <field name="phone"/>
+                <field name="country_id"/>
+                <field name="specialty"/>
+                <separator/>
+                <filter string="Pending Approval"
+                        name="filter_pending"
+                        domain="[('status', '=', 'pending')]"/>
+                <filter string="Approved"
+                        name="filter_approved"
+                        domain="[('status', '=', 'approved')]"/>
+                <filter string="Rejected"
+                        name="filter_rejected"
+                        domain="[('status', '=', 'rejected')]"/>
+                <group expand="0" name="group_by" string="Group By">
+                    <filter string="Status"
+                            name="group_by_status"
+                            context="{'group_by': 'status'}"/>
+                    <filter string="Medical Specialty"
+                            name="group_by_specialty"
+                            context="{'group_by': 'specialty'}"/>
+                    <filter string="Country"
+                            name="group_by_country"
+                            context="{'group_by': 'country_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_doctor_registration" model="ir.actions.act_window">
+        <field name="name">Registration Requests</field>
+        <field name="res_model">doctor.registration</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_doctor_registration_search"/>
+        <field name="context">{'search_default_filter_pending': 1}</field>
+    </record>
+
+    <menuitem id="menu_doctor_management"
+              name="Doctor Registration"
+              web_icon="adx_doctor_registration_portal,static/description/icon.png"
+              groups="adx_doctor_registration_portal.group_doctor_manager"
+              sequence="10"/>
+
+    <menuitem id="menu_doctor_registration"
+              name="Registration Requests"
+              parent="menu_doctor_management"
+              action="action_doctor_registration"
+              sequence="1"/>
+
+    <menuitem id="menu_doctor_configuration"
+              name="Configuration"
+              parent="menu_doctor_management"
+              sequence="50"/>
+
+</odoo>

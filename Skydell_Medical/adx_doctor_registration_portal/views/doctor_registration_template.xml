@@ -1,0 +1,232 @@
+<odoo>
+    <template id="doctor_registration_page" name="Doctor Registration">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <h2 class="text-start mb-5">Doctor Registration Request</h2>
+
+                <form action="/submit-doctor-registration"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <input type="hidden"
+                           name="csrf_token"
+                           t-att-value="request.csrf_token()"/>
+
+                    <div class="row">
+
+                        <!-- Full Name -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Full Name (as per medical license) *</label>
+                            <input type="text"
+                                   name="name"
+                                   class="form-control"
+                                   required="1"/>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Professional Email Address *</label>
+                            <input type="email"
+                                   name="email"
+                                   class="form-control"
+                                   required="1"/>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="mb-4 col-lg-6">
+                            <label class="form-label">Contact Number</label>
+                            <div class="input-group" style="position: relative;">
+
+                                <button type="button"
+                                        id="phone_code_btn"
+                                        class="btn btn-outline-secondary d-flex align-items-center gap-2"
+                                        style="min-width: 110px;">
+                                    <span id="selected_flag">🇺🇸</span>
+                                    <span id="selected_dial_code" class="fw-bold text-primary">+1</span>
+                                    <span style="font-size:10px;">▼</span>
+                                </button>
+
+                                <div id="country_code_dropdown"
+                                     style="display:none; position:absolute; top:100%; left:0; z-index:9999;
+                                            width:280px; background:#fff; border:1px solid #dee2e6;
+                                            border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+                                    <div style="padding:8px; border-bottom:1px solid #dee2e6;
+                                                position:sticky; top:0; background:#fff;">
+                                        <input type="text"
+                                               class="form-control form-control-sm"
+                                               id="phone_code_search"
+                                               placeholder="🔍 Search country or code..."/>
+                                    </div>
+                                    <div id="country_code_list"
+                                         style="max-height:250px; overflow-y:auto;"></div>
+                                </div>
+
+                                <input type="hidden"
+                                       name="phone_country_code"
+                                       id="phone_country_code"
+                                       value="+1"/>
+
+                                <input type="tel"
+                                       name="phone"
+                                       id="phone_number_input"
+                                       class="form-control"
+                                       placeholder="Enter phone number"/>
+                            </div>
+                            <small class="text-muted">Select your country flag to set the dial code</small>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Years of Clinical Experience *</label>
+                            <input type="number"
+                                   name="experience"
+                                   min="0"
+                                   class="form-control"
+                                   required="1"/>
+                        </div>
+
+                        <!-- Specialty -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Medical Specialty *</label>
+                            <select name="specialty"
+                                    class="form-control"
+                                    required="1">
+                                <option value="">Select Medical Specialty</option>
+                                <t t-foreach="request.env['doctor.specialty'].sudo().search([])"
+                                   t-as="sp">
+                                    <option t-att-value="sp.id">
+                                        <t t-esc="sp.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- License Number -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Medical License Number *</label>
+                            <input type="text"
+                                   name="license_number"
+                                   class="form-control"
+                                   required="1"/>
+                        </div>
+
+                        <!-- License Upload -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Upload Medical License Document *</label>
+                            <input type="file"
+                                   name="license_document"
+                                   multiple="multiple"
+                                   class="form-control"
+                                   required="1"/>
+                        </div>
+
+                        <!-- Medical License Expiry Date -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Medical License Expiry Date *</label>
+                            <input type="date"
+                                   name="license_expiry_date"
+                                   class="form-control"
+                                   required="1"/>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="mb-4 col-lg-6 s_website_form_required">
+                            <label class="form-label">Country of Medical Practice *</label>
+                            <select name="country_id"
+                                    class="form-control"
+                                    id="country_select"
+                                    required="1">
+                                <option value="">Select Country of Medical Practice</option>
+                                <t t-foreach="request.env['res.country'].sudo().search([])"
+                                   t-as="country">
+                                    <option t-att-value="country.id">
+                                        <t t-esc="country.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Compliance -->
+                        <div class="mb-4 col-12">
+                            <label class="form-label">
+                                <b>Applicable Regulatory Compliance</b>
+                            </label>
+                            <div id="description"
+                                 class="border p-2 rounded"
+                                 style="max-height:300px; overflow:auto;"/>
+                            <input type="hidden" name="compliance_id" id="compliance_id"/>
+                        </div>
+
+                        <!-- Compliance Acceptance -->
+                        <div class="mb-4 col-12 s_website_form_required">
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="compliance_accepted"
+                                       id="compliance_accepted"
+                                       required="1"/>
+                                <label class="form-check-label" for="compliance_accepted">
+                                    I confirm that I have read and agree to the regulatory
+                                    and compliance requirements applicable to my country
+                                    of practice. *
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="col-12 text-start">
+                            <button type="submit" class="btn btn-primary">
+                                Submit Application
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="doctor_registration_thank_you" name="Doctor Registration Thank You">
+        <t t-call="website.layout">
+            <div class="container py-5 my-5 text-center">
+                <t t-if="success == '1'">
+                    <div class="alert alert-success">
+                        <h4>Registration Request Submitted</h4>
+                        <p>
+                            Your registration request has been submitted successfully
+                            and is currently pending administrative approval.
+                            You will receive an email notification once your request
+                            has been reviewed and approved.
+                        </p>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="alert alert-danger">
+                        <h4>
+                            <t t-out="msg_title"/>
+                        </h4>
+                        <p>
+                            <t t-out="msg"/>
+                        </p>
+                    </div>
+                </t>
+                <a href="/" class="btn btn-primary mt-3">Go to Home</a>
+            </div>
+        </t>
+    </template>
+
+    <template
+            id="hide_doctor_registration_menu_public_only"
+            name="Hide Doctor Registration Menu for Non-Public Users"
+            inherit_id="website.submenu"
+            priority="20">
+        <xpath expr="//li[@t-if]" position="attributes">
+            <attribute name="t-if">
+                submenu.is_visible and not (submenu.child_id or submenu.is_mega_menu)
+                and not (submenu.url == '/doctor-registration'
+                and not request.env.user._is_public())
+            </attribute>
+        </xpath>
+    </template>
+
+</odoo>

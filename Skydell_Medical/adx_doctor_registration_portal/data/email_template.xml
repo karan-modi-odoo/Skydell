@@ -1,0 +1,146 @@
+<odoo>
+
+    <!-- Rejection Email -->
+    <record id="mail_template_doctor_registration_reject" model="mail.template">
+        <field name="name">Doctor Registration: Rejection</field>
+        <field name="model_id" ref="model_doctor_registration"/>
+        <field name="subject">{{ user.company_id.name or 'Our Platform' }} - Registration Rejected</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="description">
+            Sent automatically when a Doctor Manager rejects a registration request.
+        </field>
+        <field name="body_html" type="html">
+            <div style="margin:0px; padding:0px;">
+                <p style="margin:0px; padding:0px; font-size:13px;">
+                    Dear <t t-out="object.name or ''">Doctor</t>,
+                    <br/>
+                    <br/>
+
+                    Thank you for your interest in registering with
+                    <t t-out="user.company_id.name or 'Our Platform'"/>.
+                    <br/>
+                    <br/>
+
+                    Your registration request has been
+                    <span style="font-weight:bold; color:#d9534f;">rejected</span>.
+                    <br/>
+                    <br/>
+
+                    <t t-if="ctx.get('rejection_reason')">
+                        <strong>Reason:</strong>
+                        <br/>
+                        <span style="color:#d9534f;">
+                            <t t-out="ctx.get('rejection_reason')"/>
+                        </span>
+                        <br/>
+                        <br/>
+                    </t>
+
+                    We appreciate your time and interest.
+                    <br/>
+                    <br/>
+                    Best regards,
+                    <br/>
+
+                    <t t-if="not is_html_empty(user.signature)">
+                        <t t-out="user.signature"/>
+                    </t>
+                    <t t-else="">
+                        <t t-out="user.name"/>
+                    </t>
+                </p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Approval Email -->
+    <record id="mail_template_doctor_registration_approve" model="mail.template">
+        <field name="name">Doctor Registration: Approval</field>
+        <field name="model_id" ref="model_doctor_registration"/>
+        <field name="subject">{{ user.company_id.name or 'Our Platform' }} - Registration Approved</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="description">
+            Sent automatically when a Doctor Manager approves a registration request.
+        </field>
+        <field name="body_html" type="html">
+            <div style="margin:0px; padding:0px;">
+                <p style="margin:0px; padding:0px; font-size:13px;">
+                    Dear <t t-out="object.name or ''">Doctor</t>,
+                    <br/>
+                    <br/>
+
+                    We are pleased to inform you that your registration with
+                    <t t-out="user.company_id.name or 'Our Platform'"/>
+                    has been
+                    <span style="font-weight:bold; color:#5cb85c;">approved</span>.
+                    <br/>
+                    <br/>
+
+                    You will receive a separate email shortly with instructions
+                    to set up your password and access the portal.
+                    <br/>
+                    <br/>
+
+                    Best regards,
+                    <br/>
+
+                    <t t-if="not is_html_empty(user.signature)">
+                        <t t-out="user.signature"/>
+                    </t>
+                    <t t-else="">
+                        <t t-out="user.name"/>
+                    </t>
+                </p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Single License Expiry Reminder — period is passed dynamically via context -->
+    <record id="mail_template_license_expiry_reminder" model="mail.template">
+        <field name="name">Doctor License: Expiry Reminder</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">{{ user.company_id.name or 'Our Platform' }} - Medical License Expiring in {{ ctx.get('reminder_period', '') }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="description">
+            Sent automatically before the doctor's medical license expiry date.
+            The time period is passed dynamically when the email is triggered.
+        </field>
+        <field name="body_html" type="html">
+            <div style="margin:0px; padding:0px;">
+                <p style="margin:0px; padding:0px; font-size:13px;">
+                    Dear <t t-out="object.name or ''">Doctor</t>,
+                    <br/><br/>
+
+                    This is a reminder that your Medical License will expire in
+                    <span style="font-weight:bold; color:#dc3545;">
+                        <t t-out="ctx.get('reminder_period', '')"/>
+                    </span>.
+                    <br/><br/>
+
+                    <strong>License Details:</strong><br/>
+                    License Number: <t t-out="object.license_number or ''"/><br/>
+                    Expiry Date: <t t-out="object.license_expiry_date or ''"/>
+                    <br/><br/>
+
+                    Please ensure you begin the renewal process as soon as possible
+                    to avoid any disruption to your practice.
+                    <br/><br/>
+
+                    If you have already renewed your license, please update your
+                    details by contacting our support team.
+                    <br/><br/>
+
+                    Best regards,<br/>
+                    <t t-if="not is_html_empty(user.signature)">
+                        <t t-out="user.signature"/>
+                    </t>
+                    <t t-else="">
+                        <t t-out="user.name"/>
+                    </t>
+                </p>
+            </div>
+        </field>
+    </record>
+
+
+</odoo>

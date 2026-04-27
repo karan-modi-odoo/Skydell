@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         inherit_new_question_fields
+         1. Adds: Topic Type, procedure toggle + section, compliance
+         2. Converts core fields to vertical label-on-top layout
+    ============================================================ -->
+    <template id="inherit_new_question_fields"
+              inherit_id="website_forum.new_question"
+              name="Doctor Forum — Topic Type &amp; Compliance">
+
+        <!-- ── Custom field insertions (MUST come first) ──────── -->
+
+        <!-- Topic Type — before the Description row -->
+        <xpath expr="//div[contains(@class,'row') and .//label[@for='content']]"
+               position="before">
+            <div class="mb-3">
+                <label class="form-label" for="topic_type_select">
+                    Topic Type
+                </label>
+                <select name="topic_type_id"
+                        id="topic_type_select"
+                        class="form-select">
+                    <option value="">Select Topic Type…</option>
+                    <t t-foreach="request.env['forum.topic.type'].sudo().search([])"
+                       t-as="topic">
+                        <option t-att-value="topic.id"
+                                t-att-data-description="topic.description or ''">
+                            <t t-esc="topic.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+
+        <!-- After Tags row: toggle → procedure card → compliance -->
+        <xpath expr="//div[@class='row mb-2']" position="after">
+
+            <!-- Procedure toggle -->
+            <div class="mt-3">
+                <div class="form-check d-flex align-items-center gap-2">
+                    <input type="checkbox"
+                           class="form-check-input mt-0 skd-toggle-cb"
+                           id="is_procedure_post"
+                           name="is_procedure_post"
+                           value="1"/>
+                    <label class="form-check-label fw-medium"
+                           for="is_procedure_post">
+                        Is this post related to a procedure?
+                    </label>
+                </div>
+            </div>
+
+            <!-- Procedure card — hidden until toggle checked -->
+            <div id="skd-procedure-section" class="d-none mt-3">
+                <t t-call="adx_website_forum.skd_procedure_fields">
+                    <t t-set="skd_post" t-value="None"/>
+                </t>
+            </div>
+
+            <!-- Compliance checkbox -->
+            <div class="mb-3 mt-3">
+                <div class="form-check">
+                    <input type="checkbox"
+                           name="compliance_confirmation"
+                           value="1"
+                           required="required"
+                           class="form-check-input"
+                           id="compliance_confirmation_check"/>
+                    <label class="form-check-label"
+                           for="compliance_confirmation_check">
+                        I confirm that no patient-identifiable data is included in this post.
+                        <span class="text-danger">*</span>
+                    </label>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- ── Vertical layout: core fields (AFTER insertions) ── -->
+
+        <!-- Title label: remove col-lg-2 -->
+        <xpath expr="//div[.//input[@name='post_name']]/label[contains(@class,'col-lg-2')]"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Title row: remove row class -->
+        <xpath expr="//div[contains(@class,'row') and .//input[@name='post_name']]"
+               position="attributes">
+            <attribute name="class">mb-3</attribute>
+        </xpath>
+
+        <!-- Description label: remove col-lg-2 -->
+        <xpath expr="//div[.//textarea[@name='content']]/label[contains(@class,'col-lg-2')]"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Description row: remove row class -->
+        <xpath expr="//div[contains(@class,'row') and .//textarea[@name='content']]"
+               position="attributes">
+            <attribute name="class">mb-3</attribute>
+        </xpath>
+
+        <!-- Tags label: remove col-lg-2 -->
+        <xpath expr="//label[@for='post_tags']"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Tags row: remove row class -->
+        <xpath expr="//div[contains(@class,'row') and .//label[@for='post_tags']]"
+               position="attributes">
+            <attribute name="class">mb-2</attribute>
+        </xpath>
+
+        <!-- Submit: remove offset, then remove row class -->
+        <xpath expr="//div[@class='row mb-5']/div[contains(@class,'offset-lg-2')]"
+               position="attributes">
+            <attribute name="class">col</attribute>
+        </xpath>
+        <xpath expr="//div[@class='row mb-5']"
+               position="attributes">
+            <attribute name="class">mb-5</attribute>
+        </xpath>
+
+    </template>
+
+    <!-- ============================================================
+         inherit_edit_post_procedure
+         1. Adds: Topic Type, procedure toggle + section, compliance
+         2. Converts core fields to vertical label-on-top layout
+    ============================================================ -->
+    <template id="inherit_edit_post_procedure"
+              inherit_id="website_forum.edit_post"
+              name="Doctor Forum — Edit Post Procedure Section">
+
+        <!-- ── Custom field insertions (MUST come first) ──────── -->
+
+        <!-- Topic Type — before Title row -->
+        <xpath expr="//div[contains(@class,'row') and .//label[@for='post_name']]"
+               position="before">
+            <div class="mb-3" t-if="not is_answer">
+                <label class="form-label" for="topic_type_select">
+                    Topic Type
+                </label>
+                <select name="topic_type_id"
+                        id="topic_type_select"
+                        class="form-select">
+                    <option value="">Select Topic Type…</option>
+                    <t t-foreach="request.env['forum.topic.type'].sudo().search([])"
+                       t-as="topic">
+                        <option t-att-value="topic.id"
+                                t-att-data-description="topic.description or ''"
+                                t-att-selected="'selected' if post and post.topic_type_id and post.topic_type_id.id == topic.id else None">
+                            <t t-esc="topic.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+
+        <!-- Before submit row: toggle → procedure card → compliance -->
+        <xpath expr="//div[@class='row mb-5']" position="before">
+            <t t-if="not is_answer">
+
+                <!-- Procedure toggle -->
+                <div class="mt-3">
+                    <div class="form-check d-flex align-items-center gap-2">
+                        <input type="checkbox"
+                               class="form-check-input mt-0 skd-toggle-cb"
+                               id="is_procedure_post"
+                               name="is_procedure_post"
+                               value="1"
+                               t-att-checked="'checked' if post.is_procedure_post else None"/>
+                        <label class="form-check-label fw-medium"
+                               for="is_procedure_post">
+                            Is this post related to a procedure?
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Procedure card -->
+                <div id="skd-procedure-section"
+                     t-att-class="'mt-3' + ('' if post.is_procedure_post else ' d-none')">
+                    <t t-call="adx_website_forum.skd_procedure_fields">
+                        <t t-set="skd_post" t-value="post"/>
+                    </t>
+                </div>
+
+                <!-- Compliance checkbox -->
+                <div class="mb-3 mt-3">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="compliance_confirmation_check_edit"
+                               name="compliance_confirmation"
+                               value="1"
+                               required="required"
+                               t-att-checked="'checked' if post.compliance_confirmation else None"/>
+                        <label class="form-check-label"
+                               for="compliance_confirmation_check_edit">
+                            I confirm that no patient-identifiable data is included in this post.
+                            <span class="text-danger">*</span>
+                        </label>
+                    </div>
+                </div>
+
+            </t>
+        </xpath>
+
+        <!-- ── Vertical layout: core fields (AFTER insertions) ── -->
+
+        <!-- Question context (answer editing): remove horizontal layout -->
+        <xpath expr="//div[@class='row g-0']/div[contains(@class,'col-lg-2')]"
+               position="attributes">
+            <attribute name="class">mb-1</attribute>
+        </xpath>
+        <xpath expr="//div[@class='row g-0']"
+               position="attributes">
+            <attribute name="class">mb-3</attribute>
+        </xpath>
+
+        <!-- Title label: remove col-lg-2 -->
+        <xpath expr="//label[@for='post_name']"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Title row: remove row class -->
+        <xpath expr="//div[contains(@class,'row') and .//label[@for='post_name']]"
+               position="attributes">
+            <attribute name="class">mb-3</attribute>
+        </xpath>
+
+        <!-- Description label (question mode): remove col-lg-2 -->
+        <xpath expr="//label[@for='content' and contains(@class,'col-lg-2')]"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Description label (answer mode): remove col-lg-2 -->
+        <xpath expr="//label[@t-else and contains(@class,'col-lg-2')]"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Description row: remove row class -->
+        <xpath expr="//div[@class='row' and .//textarea[@name='content']]"
+               position="attributes">
+            <attribute name="class">mb-3</attribute>
+        </xpath>
+
+        <!-- Tags label: remove col-lg-2 -->
+        <xpath expr="//label[@for='post_tags']"
+               position="attributes">
+            <attribute name="class">form-label</attribute>
+        </xpath>
+
+        <!-- Tags row: remove row class -->
+        <xpath expr="//div[contains(@class,'row') and .//label[@for='post_tags']]"
+               position="attributes">
+            <attribute name="class">mb-2</attribute>
+        </xpath>
+
+        <!-- Submit: remove offset, then remove row class -->
+        <xpath expr="//div[@class='row mb-5']/div[contains(@class,'offset-lg-2')]"
+               position="attributes">
+            <attribute name="class">col</attribute>
+        </xpath>
+        <xpath expr="//div[@class='row mb-5']"
+               position="attributes">
+            <attribute name="class">mb-5</attribute>
+        </xpath>
+
+    </template>
+
+    <!-- ============================================================
+         skd_procedure_fields  (called template)
+         Vertical label-on-top layout matching the Contact Us page.
+    ============================================================ -->
+    <template id="skd_procedure_fields" name="SKD Procedure Fields">
+
+        <div class="card shadow-sm mt-1 mb-3 skd-procedure-card">
+
+            <!-- Card header -->
+            <div class="card-header d-flex align-items-center gap-2 py-2 px-3">
+                <i class="fa fa-stethoscope text-primary" aria-hidden="true"/>
+                <span class="fw-semibold text-primary skd-section-title">
+                    Procedure &amp; Product Details
+                </span>
+            </div>
+
+            <div class="card-body px-3 py-3">
+
+                <!-- ── PROCEDURE TYPE ───────────────────────────── -->
+                <div class="mb-3">
+                    <label class="form-label" for="procedure_type_id">
+                        Medical Procedure Type
+                        <span class="text-danger">*</span>
+                    </label>
+                    <t t-set="procedure_types"
+                       t-value="request.env['procedure.type'].sudo().search([])"/>
+                    <select name="procedure_type_id"
+                            id="procedure_type_id"
+                            class="form-select">
+                        <option value="">Select Procedure Type…</option>
+                        <t t-foreach="procedure_types" t-as="pro">
+                            <option t-att-value="pro.id"
+                                    t-att-data-is-other="1 if pro.is_other else 0"
+                                    t-att-data-description="pro.description or ''"
+                                    t-att-selected="'selected' if skd_post and skd_post.procedure_type_id and skd_post.procedure_type_id.id == pro.id else None">
+                                <t t-esc="pro.name"/>
+                            </option>
+                        </t>
+                    </select>
+                    <div class="form-text">
+                        If not listed, select <strong>Other</strong> and enter below.
+                    </div>
+                    <div class="invalid-feedback d-none" id="err_procedure_type">
+                        Please select a Procedure Type.
+                    </div>
+                </div>
+
+                <!-- ── PROCEDURE SUMMARY ────────────────────────── -->
+                <div class="mb-3" id="procedure_description_wrapper">
+                    <label class="form-label" for="procedure_description">
+                        Procedure Summary
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea name="procedure_description"
+                              id="procedure_description"
+                              class="form-control o_wysiwyg_loader"
+                              rows="2"
+                              placeholder="Auto-filled from Procedure Type, or enter manually…">
+                        <t t-if="skd_post and skd_post.procedure_description">
+                            <t t-out="skd_post.procedure_description"/>
+                        </t>
+                    </textarea>
+                </div>
+
+                <!-- ── OTHER PROCEDURE (shown when Other selected) ─ -->
+                <div class="mb-3 d-none" id="skd-other-procedure-row">
+                    <label class="form-label" for="other_procedure_detail">
+                        Add Procedure
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text"
+                           name="other_procedure_detail"
+                           id="other_procedure_detail"
+                           class="form-control mb-2"
+                           placeholder="Enter procedure name…"
+                           novalidate="novalidate"
+                           t-att-value="skd_post.other_procedure_detail if skd_post and skd_post.other_procedure_detail else ''"/>
+                    <div class="invalid-feedback d-none" id="err_other_detail">
+                        Please describe the procedure.
+                    </div>
+                    <label class="form-label mt-2 small fw-medium" for="other_procedure_description">
+                        Procedure Description
+                    </label>
+                    <textarea name="other_procedure_description"
+                              id="other_procedure_description"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Enter procedure description…">
+                        <t t-if="skd_post and skd_post.procedure_description and skd_post.procedure_type_id and skd_post.procedure_type_id.is_other">
+                            <t t-out="skd_post.procedure_description"/>
+                        </t>
+                    </textarea>
+                </div>
+
+                <!-- ── PRODUCT USED ─────────────────────────────── -->
+                <div class="mb-3">
+                    <label class="form-label" for="product_used_id">
+                        Product Used
+                        <span class="text-danger">*</span>
+                    </label>
+                    <t t-set="proc_categ"
+                       t-value="request.env.ref('adx_website_forum.product_category_doctor_procedure', raise_if_not_found=False)"/>
+                    <select name="product_used_id"
+                            id="product_used_id"
+                            class="form-select">
+                        <option value="">Select Product…</option>
+                        <t t-foreach="request.env['product.template'].sudo().search([('categ_id', 'child_of', proc_categ.id)] if proc_categ else [], limit=100)"
+                           t-as="pr">
+                            <option t-att-value="pr.id"
+                                    t-att-selected="'selected' if skd_post and skd_post.product_used_id and skd_post.product_used_id.id == pr.id else None">
+                                <t t-esc="pr.name"/>
+                            </option>
+                        </t>
+                    </select>
+                    <div class="invalid-feedback d-none" id="err_product_used">
+                        Please select a Product Used.
+                    </div>
+                </div>
+
+                <!-- ── DIVIDER: Clinical Context ────────────────── -->
+                <div class="border-bottom mb-3 mt-4 d-flex align-items-center gap-2 pb-2">
+                    <i class="fa fa-user-md text-primary skd-section-icon" aria-hidden="true"/>
+                    <span class="fw-semibold skd-section-title">
+                        Clinical Context
+                    </span>
+                </div>
+
+                <!-- ── SPECIALTY + EXPERIENCE (2-col) ───────────── -->
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="category_specialty">
+                            Category / Specialty
+                        </label>
+                        <t t-set="specialties"
+                           t-value="request.env['doctor.specialty'].sudo().search([])"/>
+                        <t t-set="selected_specialty_id"
+                           t-value="(skd_post.specialty_id.id if skd_post and skd_post.specialty_id
+                                     else (doctor_reg.specialty.id if doctor_reg and doctor_reg.specialty else 0))"/>
+                        <select name="specialty_id"
+                                id="category_specialty"
+                                class="form-select"
+                                disabled="disabled">
+                            <option value="">Select Specialty…</option>
+                            <t t-foreach="specialties" t-as="sp">
+                                <option t-att-value="sp.id"
+                                        t-att-selected="'selected' if sp.id == selected_specialty_id else None">
+                                    <t t-esc="sp.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="doctor_experience">
+                            Doctor Experience (years)
+                        </label>
+                        <t t-set="exp_value"
+                           t-value="(skd_post.doctor_experience if skd_post and skd_post.doctor_experience
+                                     else (doctor_reg.experience if doctor_reg and doctor_reg.experience else ''))"/>
+                        <input type="number"
+                               name="doctor_experience"
+                               id="doctor_experience"
+                               readonly="readonly"
+                               class="form-control"
+                               min="0"
+                               placeholder="e.g. 5"
+                               t-att-value="exp_value"/>
+                    </div>
+                </div>
+
+                <!-- ── DURATION + RECOVERY PERIOD (2-col) ────────── -->
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="duration">
+                            Duration
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="number"
+                                   name="duration"
+                                   id="duration"
+                                   class="form-control"
+                                   min="0"
+                                   placeholder="e.g. 2"
+                                   t-att-value="skd_post.duration if skd_post and skd_post.duration else ''"/>
+                            <select name="duration_unit"
+                                    id="duration_unit"
+                                    class="form-select">
+                                <option value="minutes" t-att-selected="'selected' if skd_post and skd_post.duration_unit == 'minutes' else None">Minutes</option>
+                                <option value="hours" t-att-selected="'selected' if skd_post and skd_post.duration_unit == 'hours' else None">Hours</option>
+                                <option value="days" t-att-selected="'selected' if skd_post and skd_post.duration_unit == 'days' else None">Days</option>
+                                <option value="weeks" t-att-selected="'selected' if skd_post and skd_post.duration_unit == 'weeks' else None">Weeks</option>
+                                <option value="months" t-att-selected="'selected' if skd_post and skd_post.duration_unit == 'months' else None">Months</option>
+                                <option value="years" t-att-selected="'selected' if skd_post and skd_post.duration_unit == 'years' else None">Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="recovery_period_value">
+                            Recovery Period
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="number"
+                                   name="recovery_period_value"
+                                   id="recovery_period_value"
+                                   class="form-control"
+                                   min="0"
+                                   placeholder="e.g. 2"
+                                   t-att-value="skd_post.recovery_period_value if skd_post and skd_post.recovery_period_value else ''"/>
+                            <select name="recovery_period_unit"
+                                    id="recovery_period_unit"
+                                    class="form-select">
+                                <option value="days" t-att-selected="'selected' if skd_post and skd_post.recovery_period_unit == 'days' else None">Days</option>
+                                <option value="weeks" t-att-selected="'selected' if skd_post and skd_post.recovery_period_unit == 'weeks' else None">Weeks</option>
+                                <option value="months" t-att-selected="'selected' if skd_post and skd_post.recovery_period_unit == 'months' else None">Months</option>
+                                <option value="years" t-att-selected="'selected' if skd_post and skd_post.recovery_period_unit == 'years' else None">Years</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PROCEDURE DATE (half-width) ──────────────── -->
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="date_performed">
+                            Procedure Date
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="date"
+                               name="date_performed"
+                               id="date_performed"
+                               class="form-control"
+                               t-att-value="str(skd_post.date_performed) if skd_post and skd_post.date_performed else ''"/>
+                    </div>
+                </div>
+
+                <!-- ── RECOVERY NOTES ────────────────────────────── -->
+                <div class="mb-3" id="recovery_wrapper">
+                    <label class="form-label" for="recovery">
+                        Recovery Notes
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="o_wysiwyg_textarea_wrapper" id="recovery_wysiwyg_wrapper">
+                        <textarea name="recovery"
+                                  id="recovery"
+                                  class="form-control o_wysiwyg_loader"
+                                  rows="3"
+                                  placeholder="Additional recovery instructions…"
+                                  t-att-content="skd_post.recovery if skd_post and skd_post.recovery else ''">
+                        </textarea>
+                    </div>
+                    <div class="d-none mt-1" id="err_recovery"
+                         style="color:#dc3545;font-size:0.875em;">
+                        Recovery Notes is required.
+                    </div>
+                </div>
+
+                <!-- ── DIVIDER: Risk & Outcome ───────────────────── -->
+                <div class="border-bottom mb-3 mt-4 d-flex align-items-center gap-2 pb-2">
+                    <i class="fa fa-exclamation-triangle text-primary skd-section-icon" aria-hidden="true"/>
+                    <span class="fw-semibold skd-section-title">
+                        Risk &amp; Outcome
+                    </span>
+                </div>
+
+                <!-- ── RISK LEVEL (half-width) ──────────────────── -->
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label" for="risk_level">
+                            Risk Level
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="risk_level"
+                                id="risk_level"
+                                class="form-select">
+                            <option value="">Select Risk Level…</option>
+                            <option value="low"
+                                    t-att-selected="'selected' if skd_post and skd_post.risk_level == 'low'    else None">
+                                🟢 Low Risk
+                            </option>
+                            <option value="medium"
+                                    t-att-selected="'selected' if skd_post and skd_post.risk_level == 'medium' else None">
+                                🟠 Medium Risk
+                            </option>
+                            <option value="high"
+                                    t-att-selected="'selected' if skd_post and skd_post.risk_level == 'high'   else None">
+                                🔴 High Risk
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ── RISK DETAILS ──────────────────────────────── -->
+                <div class="mb-3" id="risks_wrapper">
+                    <label class="form-label" for="risks">
+                        Risk Details
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="o_wysiwyg_textarea_wrapper" id="risks_wysiwyg_wrapper">
+                        <textarea name="risks"
+                                  id="risks"
+                                  class="form-control o_wysiwyg_loader"
+                                  rows="3"
+                                  placeholder="Describe potential risks and complications…"
+                                  t-att-content="skd_post.risks if skd_post and skd_post.risks else ''">
+                        </textarea>
+                    </div>
+                    <div class="d-none mt-1" id="err_risks"
+                         style="color:#dc3545;font-size:0.875em;">
+                        Risk Details is required.
+                    </div>
+                </div>
+
+                <!-- ── PROCEDURE OUTCOME ─────────────────────────── -->
+                <div class="mb-0" id="results_wrapper">
+                    <label class="form-label" for="results">
+                        Procedure Outcome
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="o_wysiwyg_textarea_wrapper" id="results_wysiwyg_wrapper">
+                        <textarea name="results"
+                                  id="results"
+                                  class="form-control o_wysiwyg_loader"
+                                  rows="4"
+                                  placeholder="Describe the results…">
+                            <t t-if="skd_post and skd_post.results">
+                                <t t-out="skd_post.results"/>
+                            </t>
+                        </textarea>
+                    </div>
+                    <div class="d-none mt-1" id="err_results"
+                         style="color:#dc3545;font-size:0.875em;">
+                        Procedure Outcome is required.
+                    </div>
+                </div>
+
+            </div><!-- /card-body -->
+
+            <!-- Card footer -->
+            <div class="card-footer py-2 px-3 d-flex justify-content-between align-items-center
+                        small text-muted bg-transparent border-top">
+                <span>
+                    <i class="fa fa-lock me-1" aria-hidden="true"/>
+                    Data shared only within the verified doctor community
+                </span>
+                <span>
+                    <span class="text-danger">*</span>
+                    Required
+                </span>
+            </div>
+
+        </div><!-- /card -->
+    </template>
+
+    <!-- ============================================================
+         inherit_forum_vote_peer_acknowledgment
+    ============================================================ -->
+    <template id="inherit_forum_vote_peer_acknowledgment"
+              inherit_id="website_forum.vote"
+              name="Doctor Forum — Peer Acknowledgment">
+        <xpath expr="//button[@t-attf-data-href='/forum/#{slug(forum)}/post/#{slug(post)}/upvote']"
+               position="attributes">
+            <attribute name="aria-label">Peer Acknowledgment</attribute>
+            <attribute name="title">Peer Acknowledgment</attribute>
+        </xpath>
+        <xpath expr="//button[@t-attf-data-href='/forum/#{slug(forum)}/post/#{slug(post)}/upvote']//i"
+               position="attributes">
+            <attribute name="title">Peer Acknowledgment</attribute>
+        </xpath>
+    </template>
+
+    <!-- ============================================================
+         inherit_post_stats_clinical_insight
+    ============================================================ -->
+    <template id="inherit_post_stats_clinical_insight"
+              inherit_id="website_forum.post_stats"
+              name="Doctor Forum — Clinical Insight Badge">
+        <xpath expr="//div[@class='ms-auto d-flex']" position="before">
+            <t t-if="question and question.is_clinical_insight">
+                <span class="badge text-bg-warning me-2 align-self-center">
+                    🌟 Clinical Insight of the Week
+                </span>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ============================================================
+         inherit_post_display_procedure
+    ============================================================ -->
+    <template id="inherit_post_display_procedure"
+              inherit_id="website_forum.post_display"
+              name="Show Procedure Details on Post">
+        <xpath expr="//div[@t-field='post_id.content']" position="after">
+            <t t-if="post_id.is_procedure_post">
+                <div class="card mt-3 border skd-procedure-card-display">
+
+                    <div class="card-header d-flex align-items-center gap-2 py-2 px-3">
+                        <i class="fa fa-stethoscope text-primary" aria-hidden="true" style="color:black;"/>
+                        <span class="fw-semibold text-primary skd-section-title">
+                            Procedure &amp; Product Details
+                        </span>
+                    </div>
+
+                    <div class="card-body px-3 py-3" style="font-size:13.5px;">
+                        <div class="row gy-3">
+
+                            <t t-if="post_id.procedure_type_id">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Medical Procedure Type</div>
+                                    <div class="fw-medium">
+                                        <t t-esc="post_id.procedure_type_id.name"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.product_used_id">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Product/Instrument Used</div>
+                                    <div class="fw-medium">
+                                        <t t-esc="post_id.product_used_id.name"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.specialty_id">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Category / Specialty</div>
+                                    <div>
+                                        <t t-esc="post_id.specialty_id.name"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.doctor_experience">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Doctor Experience</div>
+                                    <div>
+                                        <t t-esc="post_id.doctor_experience"/>
+                                        yrs
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.date_performed">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Procedure Date</div>
+                                    <div>
+                                        <t t-esc="post_id.date_performed"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <div class="col-md-6">
+                                <div class="small text-muted mb-1">Duration</div>
+                                <t t-esc="post_id.duration"/>
+                                <t t-if="post_id.duration_unit">
+                                    <t t-esc="' ' + (post_id.duration_unit or '').capitalize()"/>
+                                </t>
+                            </div>
+
+                            <t t-if="post_id.recovery_period_value and post_id.recovery_period_unit">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Recovery Period</div>
+                                    <div>
+                                        <t t-esc="post_id.recovery_period_value"/>
+                                        <t t-esc="' ' + post_id.recovery_period_unit"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.risk_level">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Risk Level</div>
+                                    <div>
+                                        <t t-if="post_id.risk_level == 'low'">
+                                            <span class="badge text-bg-success">🟢 Low Risk</span>
+                                        </t>
+                                        <t t-elif="post_id.risk_level == 'medium'">
+                                            <span class="badge text-bg-warning">🟠 Medium Risk</span>
+                                        </t>
+                                        <t t-elif="post_id.risk_level == 'high'">
+                                            <span class="badge text-bg-danger">🔴 High Risk</span>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.procedure_description">
+                                <div class="col-12 border-top pt-3">
+                                    <div class="small text-muted mb-1 fw-medium">Procedure Summary</div>
+                                    <div>
+                                        <t t-out="post_id.procedure_description"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.recovery">
+                                <div class="col-12 border-top pt-3">
+                                    <div class="small text-muted mb-1 fw-medium">Recovery Notes</div>
+                                    <div style="margin:0; padding:0;" class="skd-wysiwyg-output">
+                                        <t t-out="post_id.recovery"/>
+
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.risks">
+                                <div class="col-12 border-top pt-3">
+                                    <div class="small text-muted mb-1 fw-medium">Risk Details</div>
+                                    <div>
+                                        <t t-out="post_id.risks"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-if="post_id.results">
+                                <div class="col-12 border-top pt-3">
+                                    <div class="small text-muted mb-1 fw-medium">Procedure Outcome</div>
+                                    <div>
+                                        <t t-out="post_id.results"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

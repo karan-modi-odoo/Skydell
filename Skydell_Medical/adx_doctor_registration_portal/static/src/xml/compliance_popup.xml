@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- ================================================================
+         POPUP 1 — Compliance Description Updated
+         Shown when admin updates compliance content for a country.
+    ================================================================ -->
+    <!-- <t t-name="adx_doctor_registration_portal.ComplianceReacceptDialog">
+        <Dialog title="'⚠️ Compliance Updated'" size="'md'">
+            <t t-set-slot="default">
+                <p class="text-muted mb-3">
+                    The compliance requirements for your country have been updated.
+                    Please review and re-accept to continue using the portal.
+                </p>
+                <div class="border rounded p-3 bg-light"
+                     style="max-height: 300px; overflow-y: auto;"
+                     t-out="props.description"/>
+            </t>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onAccept">
+                    I Accept
+                </button>
+            </t>
+        </Dialog>
+    </t> -->
+
+
+    <t t-name="adx_doctor_registration_portal.ComplianceReacceptDialog">
+        <Dialog title="'⚠️ Compliance Action Required'" size="'md'">
+
+            <t t-set-slot="default">
+
+                <!-- Country changed banner — only when old/new country present -->
+                <t t-if="props.oldCountry and props.newCountry">
+                    <div class="alert alert-warning mb-3" role="alert"
+                         style="border-left: 4px solid #f0a500;">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span style="font-size:1.2rem;">🌍</span>
+                            <strong>Your Country of Medical Practice Has Changed</strong>
+                        </div>
+                        <small class="text-muted">
+                            Please review the updated compliance requirements
+                            for your new country and accept to continue using the portal.
+                        </small>
+                    </div>
+
+                    <!-- Old → New country cards -->
+                    <div class="d-flex align-items-stretch justify-content-center gap-3 mb-4">
+                        <div class="text-center flex-fill border rounded p-3"
+                             style="background: #fff3cd;">
+                            <div style="font-size:0.72rem; text-transform:uppercase;
+                                        letter-spacing:.6px; color:#856404; font-weight:600;">
+                                Previous Country
+                            </div>
+                            <div style="font-size:1.2rem; font-weight:700;
+                                        color:#856404; margin-top:8px;">
+                                <t t-esc="props.oldCountry"/>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center"
+                             style="font-size:2rem; color:#6c757d; padding: 0 4px;">
+                            →
+                        </div>
+                        <div class="text-center flex-fill border rounded p-3"
+                             style="background: #d1e7dd;">
+                            <div style="font-size:0.72rem; text-transform:uppercase;
+                                        letter-spacing:.6px; color:#0a5c36; font-weight:600;">
+                                New Country
+                            </div>
+                            <div style="font-size:1.2rem; font-weight:700;
+                                        color:#0a5c36; margin-top:8px;">
+                                <t t-esc="props.newCountry"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- Description-only banner — no country change involved -->
+                <t t-else="">
+                    <div class="alert alert-info mb-3" role="alert"
+                         style="border-left: 4px solid #0d6efd;">
+                        <div class="d-flex align-items-center gap-2">
+                            <span style="font-size:1.2rem;">📋</span>
+                            <strong>Compliance Requirements Updated</strong>
+                        </div>
+                        <small class="text-muted d-block mt-1">
+                            The compliance requirements for your country have been updated.
+                            Please review and re-accept to continue using the portal.
+                        </small>
+                    </div>
+                </t>
+
+                <!-- Compliance description — always shown when available -->
+                <t t-if="props.description">
+                    <div class="border rounded p-3 bg-light"
+                         style="max-height: 300px; overflow-y: auto;"
+                         t-out="props.description"/>
+                </t>
+                <t t-else="">
+                    <p class="text-muted text-center">
+                        Please re-accept the compliance requirements
+                        to continue using the portal.
+                    </p>
+                </t>
+
+            </t>
+
+            <t t-set-slot="footer">
+                <button class="btn btn-success px-4" t-on-click="onAccept">
+                    ✅ I Accept &amp; Proceed
+                </button>
+            </t>
+
+        </Dialog>
+    </t>
+
+</templates>

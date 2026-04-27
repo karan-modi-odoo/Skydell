@@ -1,0 +1,1233 @@
+/* ===== BRAND COLORS =====
+   Primary Teal  : #00b894
+   Dark Navy     : #2d3561
+   Teal Light    : #e6f8f4  (hover backgrounds)
+   Navy Light    : #eceef6  (subtle backgrounds)
+========================= */
+
+/* ===== POST CARD ===== */
+div.o_wforum_post_content {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 4px;
+
+}
+
+div.o_wforum_post_content {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 4px;
+
+}
+
+/* ===== FLAT ACTION BUTTONS ===== */
+.skd-flat-btn {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3561;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1.4;
+}
+
+.skd-flat-btn:hover {
+    background: #e6f8f4;
+    color: #00b894;
+    text-decoration: none;
+}
+
+/* ===== LIKE ACTIVE ===== */
+.skd-like-btn.skd-like-active,
+.skd-like-btn.skd-like-active:hover {
+    color: #00b894;
+}
+
+.skd-like-btn.skd-like-active .fa {
+    color: #00b894;
+}
+
+/* ===== DISLIKE ACTIVE ===== */
+.skd-dislike-btn.skd-dislike-active,
+.skd-dislike-btn.skd-dislike-active:hover {
+    color: #e02424;
+}
+
+/* ===== BEST ANSWER ===== */
+.skd-accept-btn {
+    color: #2d3561;
+}
+
+.skd-accept-btn.skd-accepted,
+.skd-accept-btn.skd-accepted:hover {
+    color: #00b894;
+}
+
+/* ===== DIVIDER ===== */
+.skd-divider {
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    background: #e5e7eb;
+    vertical-align: middle;
+}
+
+/* ===== POST ACTIONS BAR ===== */
+.skd-post-actions {
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px 0;
+}
+
+/* ===== SHARE DROPDOWN ===== */
+.skd-share-dropdown {
+    min-width: 180px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    border: 1px solid #e5e7eb;
+}
+
+.skd-share-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    color: #fff;
+    text-decoration: none;
+}
+
+.skd-share-icon:hover {
+    opacity: 0.85;
+    color: #fff;
+    text-decoration: none;
+}
+
+.skd-facebook { background: #1877f2; }
+.skd-twitter  { background: #1da1f2; }
+.skd-linkedin { background: #0a66c2; }
+.skd-copy     { background: #2d3561; }
+
+/* ===== COMMENT INPUT ===== */
+.skd-comment-input {
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #e5e7eb;
+    resize: none;
+}
+
+.skd-comment-input:focus {
+    border-color: #00b894;
+    box-shadow: 0 0 0 2px rgba(0,184,148,0.12);
+    outline: none;
+}
+
+/* ===== SEND BUTTON ===== */
+.skd-send-btn {
+    background: #00b894;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s;
+}
+
+.skd-send-btn:hover {
+    background: #009d7f;
+    color: #fff;
+}
+
+/* ===== LIST ROW ===== */
+.skd-forum-row:hover {
+    background-color: #e6f8f4;
+    cursor: pointer;
+}
+
+/* ===== COMMENT FORM — SEND BUTTON INSIDE INPUT ===== */
+.js_wforum_submit_form .d-flex,
+.o_wforum_post_comment_form .d-flex {
+    position: relative;
+    align-items: center;
+}
+
+.skd-comment-input {
+    padding-right: 52px !important;
+    width: 100%;
+}
+
+.skd-send-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+/* ===== COMMENT FORM — SEND BUTTON INSIDE INPUT ===== */
+.js_wforum_submit_form .w-100 {
+    position: relative;
+}
+
+.js_wforum_submit_form .skd-comment-input {
+    padding-right: 52px !important;
+}
+
+.js_wforum_submit_form .d-flex.gap-1.mt-1 {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 0 !important;
+}
+
+/* ===== COMMENT COLLAPSE SPACING ===== */
+.o_wforum_post_comment_collapse,
+div[id^="comment_forum_post_"] {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* ===== ICON REDESIGN — Reference Style ===== */
+
+/* Like button — filled thumbs up style */
+.skd-like-btn .fa-thumbs-up {
+    font-size: 16px;
+    color: #5a6278;
+    transition: color 0.15s, transform 0.15s;
+}
+
+.skd-like-btn:hover .fa-thumbs-up,
+.skd-like-btn.skd-like-active .fa-thumbs-up {
+    color: #00b894;
+    transform: scale(1.15);
+}
+
+/* Dislike button */
+.skd-dislike-btn .fa-thumbs-down {
+    font-size: 16px;
+    color: #5a6278;
+    transition: color 0.15s, transform 0.15s;
+}
+
+.skd-dislike-btn:hover .fa-thumbs-down,
+.skd-dislike-btn.skd-dislike-active .fa-thumbs-down {
+    color: #e02424;
+    transform: scale(1.15);
+}
+
+/* Comment button — filled bubble style */
+.skd-comment-btn .fa-comment-o {
+    font-size: 16px;
+    color: #5a6278;
+    transition: color 0.15s, transform 0.15s;
+}
+
+.skd-comment-btn:hover .fa-comment-o {
+    color: #00b894;
+    transform: scale(1.15);
+}
+
+/* Active comment — filled blue like reference */
+.skd-comment-btn.active .fa-comment-o,
+.skd-comment-btn[aria-expanded="true"] .fa-comment-o {
+    color: #1877f2;
+}
+
+/* Reply icon */
+.skd-flat-btn .fa-reply {
+    font-size: 15px;
+    color: #5a6278;
+    transition: color 0.15s;
+}
+
+.skd-flat-btn:hover .fa-reply {
+    color: #00b894;
+}
+
+/* Share icon — paper plane */
+.skd-flat-btn .fa-paper-plane-o {
+    font-size: 15px;
+    color: #5a6278;
+    transition: color 0.15s;
+}
+
+.skd-flat-btn:hover .fa-paper-plane-o {
+    color: #00b894;
+}
+
+/* Three dots menu */
+.dropdown-toggle .fa,
+.skd-post-actions .dropdown .fa {
+    color: #5a6278;
+    font-size: 15px;
+}
+
+/* Count numbers next to icons */
+.skd-like-count,
+.skd-dislike-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: #5a6278;
+    min-width: 16px;
+}
+
+.skd-like-btn.skd-like-active .skd-like-count {
+    color: #00b894;
+}
+
+.skd-dislike-btn.skd-dislike-active .skd-dislike-count {
+    color: #e02424;
+}
+
+/* ===== ACTION BAR SEPARATOR — tighter like reference ===== */
+.skd-post-actions {
+    gap: 4px;
+    padding: 6px 0 2px 0;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 12px;
+}
+
+/* ===== SIDEBAR ICONS — reference style =====
+
+   APPROACH:
+   - fa-list, fa-user-circle, fa-star, fa-check-square-o,
+     fa-flag, fa-window-close → FA4 ::before content override
+     (these have outline variants or clean replacements in FA4)
+
+   - fa-users (People) → FA4 \f0c0 is SOLID FILLED, no outline
+     variant exists. Solution: hide FA4 character via font-size:0,
+     inject outline SVG via ::before background-image.
+
+   - fa-shield (Badges) → FA4 \f132 is SOLID FILLED, no outline
+     variant exists. Solution: hide FA4 character via font-size:0,
+     inject outline shield + tick SVG via ::before background-image.
+
+   SVG stroke color: #9ca3af (matches reference grey tone exactly)
+   SVG hover color : #00b894 (brand teal — injected via separate
+                     hover rules using a teal-stroked SVG)
+
+   Safe on fresh DB — pure CSS only, zero HTML/XML changes.
+============================================= */
+
+/* --- Base transition for ALL sidebar fa icons --- */
+.o_wforum_sidebar .fa {
+    transition: color 0.15s, opacity 0.15s;
+}
+
+/* --- All Posts: fa-list — style only, no change --- */
+.o_wforum_sidebar .fa-list {
+    width: 16px;
+    text-align: center;
+    font-size: 14px;
+    color: #5a6278;
+}
+
+/* --- My Posts: fa-user-circle → fa-user-o (true outline person)
+     \f2c0 confirmed in FA4 font-awesome.css                      --- */
+.o_wforum_sidebar .fa-user-circle {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #5a6278;
+}
+.o_wforum_sidebar .fa-user-circle::before {
+    content: "\f2c0"; /* fa-user-o — outline person, no fill */
+}
+
+/* --- Favourites: fa-star filled → fa-star-o outline --- */
+.o_wforum_sidebar .fa-star {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #5a6278;
+}
+.o_wforum_sidebar .fa-star::before {
+    content: "\f006"; /* fa-star-o — outline star */
+}
+
+/* --- People: fa-users \f0c0 is SOLID in FA4 — no outline variant.
+     Step 1: Set font-size:0 to hide the solid FA4 character.
+     Step 2: Use ::before with SVG background-image to show
+             an outline-only group icon matching the reference.
+     SVG: two outline circles (heads) + two outline body arcs.   --- */
+.o_wforum_sidebar .fa-users {
+    font-size: 0 !important;        /* hide solid FA4 character */
+    display: inline-block !important;
+    width: 18px !important;
+    height: 14px !important;
+    vertical-align: middle;
+    position: relative;
+}
+.o_wforum_sidebar .fa-users::before {
+    content: "" !important;         /* override FA4 ::before */
+    display: block !important;
+    width: 18px !important;
+    height: 14px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 16' fill='none'%3E%3C!-- back-left person --%3E%3Ccircle cx='7' cy='4' r='2.8' stroke='%239ca3af' stroke-width='1.4'/%3E%3Cpath d='M1 15c0-3.3 2.7-6 6-6' stroke='%239ca3af' stroke-width='1.4' stroke-linecap='round'/%3E%3C!-- back-right person --%3E%3Ccircle cx='15' cy='4' r='2.8' stroke='%239ca3af' stroke-width='1.4'/%3E%3Cpath d='M21 15c0-3.3-2.7-6-6-6' stroke='%239ca3af' stroke-width='1.4' stroke-linecap='round'/%3E%3C!-- front-center person --%3E%3Ccircle cx='11' cy='4.5' r='3' stroke='%239ca3af' stroke-width='1.4'/%3E%3Cpath d='M5 15.5c0-3.3 2.7-6 6-6s6 2.7 6 6' stroke='%239ca3af' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+}
+
+/* People — hover: swap to teal SVG */
+.o_wforum_sidebar a:hover .fa-users::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 16' fill='none'%3E%3Ccircle cx='7' cy='4' r='2.8' stroke='%2300b894' stroke-width='1.4'/%3E%3Cpath d='M1 15c0-3.3 2.7-6 6-6' stroke='%2300b894' stroke-width='1.4' stroke-linecap='round'/%3E%3Ccircle cx='15' cy='4' r='2.8' stroke='%2300b894' stroke-width='1.4'/%3E%3Cpath d='M21 15c0-3.3-2.7-6-6-6' stroke='%2300b894' stroke-width='1.4' stroke-linecap='round'/%3E%3Ccircle cx='11' cy='4.5' r='3' stroke='%2300b894' stroke-width='1.4'/%3E%3Cpath d='M5 15.5c0-3.3 2.7-6 6-6s6 2.7 6 6' stroke='%2300b894' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+
+/* People — active sidebar item: swap to navy SVG */
+.o_wforum_sidebar a.rounded.text-bg-light .fa-users::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 16' fill='none'%3E%3Ccircle cx='7' cy='4' r='2.8' stroke='%232d3561' stroke-width='1.4'/%3E%3Cpath d='M1 15c0-3.3 2.7-6 6-6' stroke='%232d3561' stroke-width='1.4' stroke-linecap='round'/%3E%3Ccircle cx='15' cy='4' r='2.8' stroke='%232d3561' stroke-width='1.4'/%3E%3Cpath d='M21 15c0-3.3-2.7-6-6-6' stroke='%232d3561' stroke-width='1.4' stroke-linecap='round'/%3E%3Ccircle cx='11' cy='4.5' r='3' stroke='%232d3561' stroke-width='1.4'/%3E%3Cpath d='M5 15.5c0-3.3 2.7-6 6-6s6 2.7 6 6' stroke='%232d3561' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+
+/* --- Badges: fa-shield \f132 is SOLID in FA4 — no outline variant.
+     Step 1: Set font-size:0 to hide the solid FA4 character.
+     Step 2: Use ::before with SVG background-image to show
+             an outline shield with a tick inside — white fill
+             inside shield, grey stroke outline, grey tick.       --- */
+.o_wforum_sidebar .fa-shield {
+    font-size: 0 !important;        /* hide solid FA4 character */
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    vertical-align: middle;
+    position: relative;
+}
+.o_wforum_sidebar .fa-shield::before {
+    content: "" !important;         /* override FA4 ::before */
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 24' fill='none'%3E%3C!-- Shield outline with white fill --%3E%3Cpath d='M11 2L3 5.5V11c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5.5L11 2Z' fill='white' stroke='%239ca3af' stroke-width='1.6' stroke-linejoin='round'/%3E%3C!-- Tick inside shield --%3E%3Cpath d='M7.5 12l2.5 2.5 5-5' stroke='%239ca3af' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+}
+
+/* Badges — hover: swap to teal SVG */
+.o_wforum_sidebar a:hover .fa-shield::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 24' fill='none'%3E%3Cpath d='M11 2L3 5.5V11c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5.5L11 2Z' fill='white' stroke='%2300b894' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M7.5 12l2.5 2.5 5-5' stroke='%2300b894' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+/* Badges — active sidebar item: swap to navy SVG */
+.o_wforum_sidebar a.rounded.text-bg-light .fa-shield::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 24' fill='none'%3E%3Cpath d='M11 2L3 5.5V11c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5.5L11 2Z' fill='white' stroke='%232d3561' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M7.5 12l2.5 2.5 5-5' stroke='%232d3561' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+/* --- To Validate: fa-check-square-o — already outline, style only --- */
+.o_wforum_sidebar .fa-check-square-o {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #5a6278;
+}
+
+/* --- Flagged: fa-flag filled → fa-flag-o outline --- */
+.o_wforum_sidebar .fa-flag {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #5a6278;
+}
+.o_wforum_sidebar .fa-flag::before {
+    content: "\f11d"; /* fa-flag-o — outline flag */
+}
+
+/* --- Closed: fa-window-close (boxed X) → fa-times (clean X) --- */
+.o_wforum_sidebar .fa-window-close {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #5a6278;
+}
+.o_wforum_sidebar .fa-window-close::before {
+    content: "\f00d"; /* fa-times — clean X, no surrounding box */
+}
+
+/* --- Inactive: Odoo adds opacity-50 via t-attf-class dynamically.
+     We soften slightly for better visual balance.
+     Do NOT set opacity: 1 !important on base icons — that was the
+     root cause of icons appearing too dark in earlier versions.  --- */
+.o_wforum_sidebar .fa.opacity-50 {
+    opacity: 0.4 !important;
+}
+
+/* --- Hover: teal color on FA4 text-based icons --- */
+.o_wforum_sidebar a:hover .fa {
+    color: #00b894 !important;
+    opacity: 1 !important;
+}
+
+/* --- Active link: navy color, full opacity --- */
+.o_wforum_sidebar a.rounded.text-bg-light .fa {
+    color: #2d3561 !important;
+    opacity: 1 !important;
+}
+
+/* ===== COMMENT SECTION SPACING ===== */
+.o_wforum_post_comment {
+    margin-top: 12px !important;
+    padding: 10px 14px !important;
+}
+
+/* Space between each comment item */
+.o_wforum_post_comment + .o_wforum_post_comment {
+    margin-top: 8px !important;
+}
+
+/* ===== REPLY ICON FIX ===== */
+.skd-flat-btn .fa-reply {
+    font-size: 15px;
+    color: #5a6278;
+    transition: color 0.15s, transform 0.15s;
+    display: inline-block;
+}
+
+.skd-flat-btn:hover .fa-reply {
+    color: #00b894;
+    transform: scaleX(-1) scale(1.15);
+}
+
+/* ===== ACTION BAR — tighten spacing like reference ===== */
+.skd-post-actions {
+    border-top: 1px solid #f0f0f0;
+    margin-top: 12px;
+    padding-top: 8px;
+}
+
+/* ===== COMMENT COLLAPSE WRAPPER SPACING ===== */
+div[id^="comment_forum_post_"] {
+    margin-top: 14px !important;
+}
+
+/* ===== CUSTOM SVG ICONS ===== */
+.skd-svg-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.skd-svg-icon svg {
+    display: block;
+    transition: transform 0.15s, opacity 0.15s;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.10));
+}
+
+/* Comment icon size boost */
+.skd-svg-comment svg {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+/* Reply icon size boost */
+.skd-svg-reply svg {
+    width: 26px !important;
+    height: 26px !important;
+}
+
+/* Reply SVG hover — all strokes go teal */
+.skd-flat-btn:hover .skd-svg-reply svg rect,
+.skd-flat-btn:hover .skd-svg-reply svg path {
+    stroke: #00b894 !important;
+}
+
+/* Comment hover */
+.skd-comment-btn:hover .skd-svg-comment svg,
+.skd-comment-btn[aria-expanded="true"] .skd-svg-comment svg {
+    transform: scale(1.15);
+    opacity: 0.85;
+    filter: drop-shadow(0 2px 4px rgba(26,86,219,0.25));
+}
+
+/* Comment active — brighter blue */
+.skd-comment-btn[aria-expanded="true"] .skd-svg-comment circle {
+    fill: #1565c0;
+}
+
+/* Remove old fa icon styles that no longer apply */
+.skd-comment-btn .fa-comment-o,
+.skd-flat-btn .fa-reply {
+    display: none;
+}
+
+/* ===== GAP BETWEEN POST CARD AND ANSWER SECTION ===== */
+
+/* Gap after question post block */
+.o_wforum_question {
+    margin-bottom: 32px !important;
+}
+
+/* Gap after each answer post block */
+.o_wforum_answer {
+    margin-bottom: 24px !important;
+    margin-top: 32px !important;
+}
+
+/* ===== ANSWER CARD — same spacing/card style as comment ===== */
+.o_wforum_answer .o_wforum_post_content {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 14px !important;
+    padding: 14px 16px !important;
+    margin-bottom: 4px !important;
+    margin-top: 8px !important;
+}
+
+/* ===== ANSWER HEADER — same top spacing as comment header ===== */
+.o_wforum_answer > .col,
+.o_wforum_answer > div {
+    padding-top: 16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}
+
+/* Gap before answers section */
+.o_wforum_wrapper section {
+    margin-top: 8px;
+}
+
+/* Gap between post content and action bar */
+.post_content_wrapper {
+    padding-bottom: 8px;
+}
+
+/* Space between action bar and comments */
+.skd-post-actions {
+    margin-bottom: 16px;
+}
+
+/* Answer section top spacing */
+.o_wforum_wrapper .d-grid > section {
+    padding-top: 8px;
+}
+
+/* ===== COMMENTS INDENTED RIGHT LIKE REFERENCE ===== */
+.o_wforum_post_comments_container {
+    margin-left: 48px !important;
+    margin-right: 0 !important;
+    margin-top: 8px !important;
+}
+
+/* Each comment card */
+.o_wforum_post_comment {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 10px !important;
+    padding: 10px 16px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Remove gap-2 override if conflicting */
+.o_wforum_post_comments_container.d-flex.flex-column {
+    gap: 8px !important;
+}
+
+/* ================================================
+   FORUM LIST PAGE — SKYDELL MEDICAL ATTRACTIVE UI
+   ================================================ */
+
+/* ===== TABLE CONTAINER ===== */
+.o_wforum_table {
+    border-collapse: separate !important;
+    border-spacing: 0 6px !important;
+    margin-top: 8px !important;
+}
+
+/* ===== TABLE HEADER ===== */
+.o_wforum_table thead tr {
+    background: transparent;
+}
+
+.o_wforum_table thead th {
+    border-bottom: 2px solid #e5e7eb !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #1a2e5a !important;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.o_wforum_table thead th a {
+    color: #1a2e5a !important;
+    text-decoration: none !important;
+    transition: color 0.15s;
+}
+
+.o_wforum_table thead th a:hover {
+    color: #00b894 !important;
+}
+
+/* ===== TABLE ROWS ===== */
+.o_wforum_table tbody tr,
+.skd-forum-row {
+    background: #ffffff;
+    border-radius: 10px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+}
+
+.o_wforum_table tbody tr:hover,
+.skd-forum-row:hover {
+    background: #f0f9ff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 184, 148, 0.10) !important;
+}
+
+/* Row cells */
+.o_wforum_table tbody tr td {
+    padding: 14px 16px !important;
+    border-top: 1px solid #f0f2f5 !important;
+    border-bottom: 1px solid #f0f2f5 !important;
+    vertical-align: middle !important;
+}
+
+.o_wforum_table tbody tr td:first-child {
+    border-left: 3px solid transparent !important;
+    border-radius: 10px 0 0 10px !important;
+    transition: border-color 0.2s;
+}
+
+.o_wforum_table tbody tr td:last-child {
+    border-radius: 0 10px 10px 0 !important;
+}
+
+.o_wforum_table tbody tr:hover td:first-child {
+    border-left-color: #00b894 !important;
+}
+
+/* ===== POST TITLE ===== */
+.o_wforum_table_title a {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #1a2e5a !important;
+    text-decoration: none !important;
+    transition: color 0.15s;
+    line-height: 1.4;
+}
+
+.o_wforum_table_title a:hover {
+    color: #00b894 !important;
+}
+
+/* ===== TAGS — badges in table ===== */
+.o_wforum_table .badge,
+.o_wforum_table [class*="badge"] {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    padding: 3px 10px !important;
+    border-radius: 20px !important;
+    margin-right: 4px !important;
+    transition: all 0.15s;
+}
+
+.o_wforum_table .badge:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+/* ===== REPLIES / VIEWS / ACTIVITY COLUMNS ===== */
+.o_wforum_table_replies,
+.o_wforum_table_views,
+.o_wforum_table_activity {
+    font-size: 13px !important;
+    color: #5a6278 !important;
+    font-weight: 500 !important;
+}
+
+/* Zero replies — muted grey */
+.o_wforum_table_replies span[t-out="0"],
+.o_wforum_table_replies:has(span:empty) {
+    color: #c0c4cc !important;
+}
+
+/* ===== AVATAR/POSTER ===== */
+.o_wforum_table_posters img {
+    border-radius: 50% !important;
+    border: 2px solid #e5e7eb !important;
+    transition: border-color 0.2s, transform 0.2s;
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.o_wforum_table tbody tr:hover .o_wforum_table_posters img {
+    border-color: #00b894 !important;
+    transform: scale(1.08);
+}
+
+/* ===== SEARCH BAR =====================================================
+   Scoped strictly to the forum list search bar only.
+   input[name="search"] is NOT used here — it also matches the Select2
+   internal search input inside the Tags field, causing scrollbar +
+   pill shape on Tags. Use .o_wforum_search_input class only.
+==================================================================== */
+.o_wforum_search_input {
+    border-radius: 24px !important;
+    border: 1.5px solid #e5e7eb !important;
+    padding: 8px 20px !important;
+    font-size: 14px !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.o_wforum_search_input:focus {
+    border-color: #00b894 !important;
+    box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.12) !important;
+    outline: none !important;
+}
+
+/* ===== TAGS SELECT2 WIDGET — reset any leaked styles ===============
+   Ensures the Odoo standard Select2 Tags field is never touched
+   by our custom search bar or dropdown rules.
+==================================================================== */
+.select2-container--default .select2-selection--multiple {
+    border-radius: 6px !important;
+    border: 1px solid #ced4da !important;
+    padding: 2px 4px !important;
+    min-height: 38px !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.select2-container--default .select2-selection--multiple:focus-within {
+    border-color: #875A7B !important;
+    box-shadow: 0 0 0 3px rgba(135, 90, 123, 0.18) !important;
+    outline: none !important;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 4px !important;
+    box-shadow: none !important;
+    font-size: 1rem !important;
+    margin-top: 4px !important;
+}
+
+/* ===== FILTER DROPDOWN (All ▾) =====================================
+   Scoped ONLY to .dropdown-toggle buttons in the forum toolbar.
+   Does NOT touch <select> form fields — keeps Topic Type,
+   Procedure Type, and Product Used in Odoo standard style.
+==================================================================== */
+.o_wforum_wrapper .dropdown-toggle {
+    border-radius: 24px !important;
+    border: 1.5px solid #e5e7eb !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #1a2e5a !important;
+    padding: 6px 16px !important;
+    transition: border-color 0.2s;
+}
+
+.o_wforum_wrapper .dropdown-toggle:hover {
+    border-color: #00b894 !important;
+    color: #00b894 !important;
+}
+
+/* ===== DROPDOWN MENU ===== */
+.o_wforum_wrapper .dropdown-menu {
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
+    padding: 6px !important;
+}
+
+.o_wforum_wrapper .dropdown-item {
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    padding: 8px 14px !important;
+    transition: background 0.15s, color 0.15s;
+}
+
+.o_wforum_wrapper .dropdown-item:hover {
+    background: #e6f8f4 !important;
+    color: #00b894 !important;
+}
+
+/* ===== PAGE TITLE ===== */
+#o_wforum_forums_index_list h1,
+.o_wforum_wrapper h1 {
+    color: #1a2e5a !important;
+    font-weight: 700 !important;
+}
+
+/* ===== NO RESULTS MESSAGE ===== */
+.o_wforum_wrapper .alert-info {
+    border-radius: 12px !important;
+    border: none !important;
+    background: #e6f8f4 !important;
+    color: #1a2e5a !important;
+}
+
+/* ===== TAGS SELECT2 — Force Odoo Standard Appearance =============
+   Overrides any brand color leaking into the Select2 Tags widget.
+   Restores exact Odoo 18 standard look — grey border, no pill shape.
+================================================================== */
+.o_wforum_new_post .select2-container--default .select2-selection--multiple,
+.website_forum .select2-container--default .select2-selection--multiple {
+    border-radius: 4px !important;
+    border: 1px solid #ced4da !important;
+    background-color: #ffffff !important;
+    min-height: 38px !important;
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    padding: 2px 6px !important;
+}
+
+.o_wforum_new_post .select2-container--default .select2-selection--multiple:focus-within,
+.website_forum .select2-container--default .select2-selection--multiple:focus-within {
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.o_wforum_new_post .select2-container--default .select2-search--inline .select2-search__field,
+.website_forum .select2-container--default .select2-search--inline .select2-search__field {
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 4px !important;
+    box-shadow: none !important;
+    font-size: 1rem !important;
+    margin-top: 4px !important;
+    background: transparent !important;
+}
+
+/* ===== TAGS — o_select_menu (Odoo 18 OWL widget) =================
+   Styles the js_select_menu_wrapper used in the Tags row of the
+   new/edit post form. Matches the look of other form fields
+   (Title, Description) exactly — white background, grey border,
+   standard border-radius, clean focus ring.
+================================================================== */
+
+/* Toggler button — the visible "input" box */
+.js_select_menu_wrapper .o_select_menu_toggler,
+.o_wforum_new_post .o_select_menu_toggler,
+.o_wforum_wrapper .o_select_menu_toggler {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    min-height: 38px !important;
+    height: auto !important;
+    padding: 4px 8px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 6px !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: #212529 !important;
+    cursor: text !important;
+    box-shadow: none !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    gap: 4px !important;
+}
+
+.js_select_menu_wrapper .o_select_menu_toggler:hover,
+.o_wforum_new_post .o_select_menu_toggler:hover,
+.o_wforum_wrapper .o_select_menu_toggler:hover {
+    border-color: #adb5bd !important;
+}
+
+.js_select_menu_wrapper .o_select_menu_toggler:focus,
+.js_select_menu_wrapper .o_select_menu_toggler:focus-visible,
+.o_wforum_new_post .o_select_menu_toggler:focus,
+.o_wforum_wrapper .o_select_menu_toggler:focus,
+.js_select_menu_wrapper .o_select_menu:focus-within .o_select_menu_toggler {
+    border-color: #875A7B !important;
+    box-shadow: 0 0 0 3px rgba(135, 90, 123, 0.18) !important;
+    outline: none !important;
+}
+
+/* Placeholder text inside toggler */
+.js_select_menu_wrapper .o_select_menu_toggler .o_select_menu_toggler_slot,
+.js_select_menu_wrapper .o_select_menu_toggler > span:not(.o_tag):not(.badge) {
+    color: #6c757d !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    padding: 2px 4px !important;
+}
+
+/* Caret arrow — hide or make subtle */
+.js_select_menu_wrapper .o_select_menu_toggler_caret,
+.o_wforum_wrapper .o_select_menu_toggler_caret {
+    margin-left: auto !important;
+    color: #6c757d !important;
+    flex-shrink: 0 !important;
+}
+
+/* ── Tag pills inside the toggler ── */
+.js_select_menu_wrapper .o_select_menu_toggler .o_tag,
+.js_select_menu_wrapper .o_select_menu_toggler .badge,
+.o_wforum_new_post .o_select_menu_toggler .o_tag,
+.o_wforum_wrapper .o_select_menu_toggler .o_tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 20px !important;
+    background-color: #e6f8f4 !important;
+    color: #00b894 !important;
+    border: 1px solid #b2e8dd !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+}
+
+/* Tag delete × button */
+.js_select_menu_wrapper .o_select_menu_toggler .o_tag .o_delete,
+.js_select_menu_wrapper .o_select_menu_toggler .o_tag [class*="delete"],
+.js_select_menu_wrapper .o_select_menu_toggler .o_tag button {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-left: 2px !important;
+    color: #00b894 !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    line-height: 1 !important;
+    opacity: 0.7 !important;
+    transition: opacity 0.15s !important;
+}
+
+.js_select_menu_wrapper .o_select_menu_toggler .o_tag .o_delete:hover {
+    opacity: 1 !important;
+}
+
+/* ── Dropdown panel ── */
+.js_select_menu_wrapper .o_select_menu_menu,
+.o_wforum_new_post .o_select_menu_menu,
+.o_wforum_wrapper .o_select_menu_menu {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10) !important;
+    padding: 4px !important;
+    min-width: 100% !important;
+    z-index: 1055 !important;
+    margin-top: 2px !important;
+}
+
+/* Search input inside dropdown */
+.js_select_menu_wrapper .o_select_menu_menu input,
+.js_select_menu_wrapper .o_select_menu_menu .o_select_menu_search input {
+    width: 100% !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+    outline: none !important;
+}
+
+.js_select_menu_wrapper .o_select_menu_menu input:focus {
+    border-color: #875A7B !important;
+    box-shadow: 0 0 0 2px rgba(135, 90, 123, 0.15) !important;
+}
+
+/* ── Dropdown items ── */
+.js_select_menu_wrapper .o_select_menu_item,
+.o_wforum_new_post .o_select_menu_item,
+.o_wforum_wrapper .o_select_menu_item {
+    padding: 7px 12px !important;
+    font-size: 14px !important;
+    border-radius: 6px !important;
+    color: #212529 !important;
+    cursor: pointer !important;
+    transition: background 0.12s, color 0.12s !important;
+}
+
+.js_select_menu_wrapper .o_select_menu_item:hover,
+.o_wforum_new_post .o_select_menu_item:hover,
+.o_wforum_wrapper .o_select_menu_item:hover {
+    background-color: #e6f8f4 !important;
+    color: #00b894 !important;
+}
+
+.js_select_menu_wrapper .o_select_menu_item.o_select_active,
+.js_select_menu_wrapper .o_select_menu_item.selected,
+.o_wforum_wrapper .o_select_menu_item.o_select_active {
+    background-color: #e6f8f4 !important;
+    color: #00b894 !important;
+    font-weight: 500 !important;
+}
+
+/* ===== BOTTOM REPLY BUTTON — envelope + large swoosh arrow =====
+   viewBox 0 0 44 44 — matches XML inline SVG exactly.
+   Envelope top area + large swoosh arrow bottom-left.
+   Arrow body: C-curve. Head: two diverging tips (upper + lower left).
+   No XML/JS/logic changes. Safe on fresh DB.
+================================================================== */
+a.o_wforum_collapse_answer {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #2d3561 !important;
+    text-decoration: none !important;
+    transition: color 0.15s, background 0.15s !important;
+    line-height: 1.4 !important;
+}
+
+a.o_wforum_collapse_answer:hover {
+    background: #e6f8f4 !important;
+    color: #00b894 !important;
+    text-decoration: none !important;
+}
+
+/* Grey default — envelope + fishtail arrow matching reference */
+a.o_wforum_collapse_answer::before {
+    content: "" !important;
+    display: inline-block !important;
+    width: 26px !important;
+    height: 26px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none'%3E%3Crect x='2' y='2' width='30' height='22' rx='2' stroke='%235a6278' stroke-width='2.2'/%3E%3Cpath d='M2 2 L17 14 L32 2' stroke='%235a6278' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M2 24 L13 14' stroke='%235a6278' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M32 24 L21 14' stroke='%235a6278' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M32 24 C32 36 20 42 12 36' stroke='%235a6278' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M12 36 C10 30 14 26 18 24' stroke='%235a6278' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M12 36 C14 40 20 44 24 42' stroke='%235a6278' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+}
+
+/* Teal on hover */
+a.o_wforum_collapse_answer:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none'%3E%3Crect x='2' y='2' width='30' height='22' rx='2' stroke='%2300b894' stroke-width='2.2'/%3E%3Cpath d='M2 2 L17 14 L32 2' stroke='%2300b894' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M2 24 L13 14' stroke='%2300b894' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M32 24 L21 14' stroke='%2300b894' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M32 24 C32 36 20 42 12 36' stroke='%2300b894' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M12 36 C10 30 14 26 18 24' stroke='%2300b894' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M12 36 C14 40 20 44 24 42' stroke='%2300b894' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+
+/* Hide the default FA icon if present */
+a.o_wforum_collapse_answer i,
+a.o_wforum_collapse_answer .fa {
+    display: none !important;
+}
+
+/* ===== Forum reply alignment ===== */
+.o_wforum_answer > .col, .o_wforum_answer > div, .o_wforum_question > .col, .o_wforum_question > div {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+/* ===== PROCEDURE FORM — Odoo Default Styling ===== */
+
+/* Form labels — Odoo default */
+.skd-procedure-card .form-label {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Form inputs, selects, textareas — Odoo default */
+.skd-procedure-card .form-control,
+.skd-procedure-card .form-select {
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: #212529 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+    padding: 0.375rem 0.75rem !important;
+}
+
+.skd-procedure-card .form-control:focus,
+.skd-procedure-card .form-select:focus {
+    border-color: #714B67 !important;
+    box-shadow: 0 0 0 0.2rem rgba(113, 75, 103, 0.15) !important;
+    outline: none !important;
+}
+
+/* Disabled/readonly fields */
+.skd-procedure-card .form-control:disabled,
+.skd-procedure-card .form-control[readonly],
+.skd-procedure-card .form-select:disabled {
+    background-color: #e9ecef !important;
+    color: #6c757d !important;
+}
+
+/* Placeholder text */
+.skd-procedure-card .form-control::placeholder {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+}
+
+/* Form helper text */
+.skd-procedure-card .form-text {
+    font-size: 0.8125rem !important;
+    color: #6c757d !important;
+}
+
+/* Input groups (Duration, Recovery Period) */
+.skd-procedure-card .input-group .form-control,
+.skd-procedure-card .input-group .form-select {
+    font-size: 0.875rem !important;
+}
+
+/* Section headings — black styling */
+.skd-procedure-card .border-bottom span,
+.skd-procedure-card .border-bottom .skd-section-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #212529 !important;
+    text-transform: none !important;
+}
+
+.skd-procedure-card .border-bottom .fa,
+.skd-procedure-card .border-bottom .skd-section-icon {
+    font-size: 18px !important;
+    color: #212529 !important;
+}
+
+/* Card header (Procedure & Product Details) */
+.skd-procedure-card .card-header .fa {
+    font-size: 18px !important;
+    color: #212529 !important;
+}
+
+.skd-procedure-card .card-header .skd-section-title {
+    font-size: 18px !important;
+    color: #212529 !important;
+}
+
+/* ===== DESCRIPTION WYSIWYG EDITOR — Match Topic Type background ===== */
+
+/* The editor container wrapper */
+.o_wforum_new_post .odoo-editor-container,
+.o_wforum_wrapper .odoo-editor-container {
+    background-color: #ffffff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.375rem !important;
+}
+
+/* The actual editable area inside the Wysiwyg */
+.o_wforum_new_post .odoo-editor-editable,
+.o_wforum_wrapper .odoo-editor-editable {
+    background-color: #ffffff !important;
+    min-height: 150px !important;
+}

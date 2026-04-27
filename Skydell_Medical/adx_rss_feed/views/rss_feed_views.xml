@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- rss.feed.item — readonly list shown inside feed form -->
+    <record id="view_rss_feed_item_list" model="ir.ui.view">
+        <field name="name">rss.feed.item.list</field>
+        <field name="model">rss.feed.item</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="true">
+                <field name="pub_date"/>
+                <field name="title"/>
+                <field name="description"/>
+                <field name="link" widget="url"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- rss.feed — list view -->
+    <record id="view_rss_feed_list" model="ir.ui.view">
+        <field name="name">rss.feed.list</field>
+        <field name="model">rss.feed</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="channel_title" string="Channel Title"/>
+                <field name="post_limit"/>
+                <field name="last_fetch_date"/>
+                <field name="item_count" string="Cached Items"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- rss.feed — form view -->
+    <record id="view_rss_feed_form" model="ir.ui.view">
+        <field name="name">rss.feed.form</field>
+        <field name="model">rss.feed</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_fetch_now" string="Fetch Now"
+                            type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="url" widget="url"/>
+                            <field name="channel_title" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="post_limit"/>
+                            <field name="active"/>
+                            <field name="last_fetch_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cached Items">
+                            <field name="item_ids" mode="list" readonly="True">
+                                <list create="false" edit="false" delete="true">
+                                    <field name="pub_date"/>
+                                    <field name="title"/>
+                                    <field name="description"/>
+                                    <field name="link" widget="url"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- rss.feed — search view -->
+    <record id="view_rss_feed_search" model="ir.ui.view">
+        <field name="name">rss.feed.search</field>
+        <field name="model">rss.feed</field>
+        <field name="arch" type="xml">
+            <search string="Search RSS Feeds">
+
+                <!-- Search Fields -->
+                <field name="name" string="Feed Name"/>
+                <field name="url" string="URL"
+                       filter_domain="[('url', 'ilike', self)]"/>
+                <field name="channel_title" string="Channel Title"
+                       filter_domain="[('channel_title', 'ilike', self)]"/>
+
+                <!-- Filters -->
+                <filter string="Active" name="active"
+                        domain="[('active','=',True)]"/>
+                <filter string="Archived" name="inactive"
+                        domain="[('active','=',False)]"/>
+
+                <!-- Group By -->
+                <group expand="0" string="Group By">
+                    <filter string="Channel Title" name="group_by_channel_title"
+                            context="{'group_by': 'channel_title'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_rss_feed" model="ir.actions.act_window">
+        <field name="name">RSS Feeds</field>
+        <field name="res_model">rss.feed</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu under Website → Content -->
+    <menuitem id="menu_rss_feed"
+              name="RSS Feeds"
+              parent="website.menu_content"
+              action="action_rss_feed"
+              sequence="60"/>
+
+</odoo>

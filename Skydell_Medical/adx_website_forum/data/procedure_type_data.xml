@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="procedure_type_other" model="procedure.type">
+        <field name="name">Other</field>
+        <field name="sequence">99</field>
+        <field name="is_other">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="product_category_doctor_procedure" model="product.category">
+        <field name="parent_id" ref="product.product_category_all"/>
+        <field name="name">Doctor Procedure</field>
+    </record>
+
+</odoo>

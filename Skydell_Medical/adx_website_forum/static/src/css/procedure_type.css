@@ -1,0 +1,262 @@
+// ================================================================
+// procedure_type.scss
+// Skydell Medical — Procedure Section Styling
+//
+// Design principles (Odoo 18):
+//  • All colours via Bootstrap/Odoo SCSS variables — never hardcoded hex.
+//  • $primary        — theme primary colour (adapts to any Odoo theme).
+//  • $border-color   — standard Bootstrap border token.
+//  • $gray-*         — standard Bootstrap neutral palette.
+//  • $font-size-sm   — Bootstrap small text token.
+//  • Bootstrap card, form-control, form-select, badge already styled
+//    correctly by Odoo's Bootstrap bundle — we only add what is
+//    genuinely missing or needs a targeted override.
+// ================================================================
+
+// ── Procedure card ──────────────────────────────────────────────
+// The card itself is a plain Bootstrap `.card`. Only two things
+// need overriding: the section-title font size (slightly smaller
+// than card-header default) and a smooth reveal animation.
+
+.skd-procedure-card,
+.skd-procedure-card-display {
+    // Smooth slide-in when the JS reveals the section
+    animation: skd-reveal 0.2s ease-out;
+
+    .skd-section-title {
+        font-size: $font-size-sm;
+        color: $black;
+    }
+}
+
+// Reveal animation
+@keyframes skd-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+// ── Procedure section dividers Clinical Context / Risk & Outcome
+// Inline label sitting on the border-bottom line.
+// Bootstrap utility classes handle the border — only the font
+// treatment needs a rule here.
+.border-bottom > .small.fw-semibold.text-muted.text-uppercase {
+    display: inline-block;
+    background: $body-bg;
+    padding-right: map-get($spacers, 2);
+    position: relative;
+    top: 0.6em;
+}
+
+
+// ── Toggle checkbox — uses $primary so it follows the theme ─────
+.skd-toggle-cb {
+    accent-color: $primary;
+    cursor: pointer;
+}
+
+.form-check-label[for="is_procedure_post"] {
+    cursor: pointer;
+    font-weight: $font-weight-medium;
+}
+
+
+// ── Tags dropdown — reset to plain Bootstrap white/light style ──
+// Odoo's o_select_menu component picks up the webclient dark theme
+// variables in some builds; force it back to standard portal style.
+.o_wforum_wrapper {
+    .o_select_menu_toggler,
+    button.o_select_menu_toggler {
+        background-color: $white !important;
+        border: $input-border-width solid $input-border-color !important;
+        border-radius: $input-border-radius !important;
+        color: $input-color !important;
+
+        &:hover {
+            border-color: darken($input-border-color, 10%) !important;
+        }
+
+        &:focus,
+        &:focus-visible {
+            border-color: $input-focus-border-color !important;
+            box-shadow: $input-focus-box-shadow !important;
+            outline: none !important;
+        }
+
+        .text-wrap,
+        .text-start,
+        span {
+            background: transparent !important;
+            color: $input-placeholder-color !important;
+        }
+    }
+
+    .o_select_menu_toggler_caret {
+        color: $text-muted !important;
+    }
+
+    // Tag badges inside the toggler
+    .o_select_menu .o_tag,
+    .o_select_menu .badge,
+    .o_select_menu_toggler .o_tag {
+        background-color: $gray-200 !important;
+        color: $gray-800 !important;
+        border: 1px solid $gray-300 !important;
+        border-radius: $badge-border-radius !important;
+    }
+
+    // Dropdown panel
+    .o_select_menu_menu,
+    .o_select_menu .dropdown-menu {
+        background-color: $white !important;
+        border: $dropdown-border-width solid $dropdown-border-color !important;
+        box-shadow: $dropdown-box-shadow !important;
+    }
+
+    // Dropdown items
+    .o_select_menu_item,
+    .o_select_menu_menu .dropdown-item {
+        color: $dropdown-link-color !important;
+        background-color: transparent !important;
+
+        &:hover {
+            background-color: $dropdown-link-hover-bg !important;
+            color: $dropdown-link-hover-color !important;
+        }
+
+        &.o_select_active,
+        &:focus {
+            background-color: $dropdown-link-active-bg !important;
+            color: $dropdown-link-active-color !important;
+        }
+    }
+}
+
+.skd-procedure-card-display .skd-section-title {
+    font-size: 18px !important;
+}
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+// Remove ALL green validation styles — but NEVER override .is-invalid red.
+// An empty non-required input is CSS-:valid, so without :not(.is-invalid)
+// the !important would kill Bootstrap's red border set by JS via .is-invalid.
+
+input:valid:not(.is-invalid),
+textarea:valid:not(.is-invalid),
+select:valid:not(.is-invalid) {
+    border-color: $input-border-color !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+// Also remove Bootstrap success class — only when not also .is-invalid
+.is-valid:not(.is-invalid) {
+    border-color: $input-border-color !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+// Remove green check icon — only on true .is-valid, never on .is-invalid
+.form-control.is-valid:not(.is-invalid),
+.form-select.is-valid:not(.is-invalid) {
+    background-image: none !important;
+}
+
+// Kill Bootstrap green validation globally
+:root {
+    --bs-form-valid-border-color: #ced4da;   // normal border
+    --bs-form-valid-color: inherit;
+    --bs-form-valid-bg-image: none;
+}
+
+#other_procedure_detail,
+#other_procedure_detail:focus,
+#other_procedure_detail:valid,
+#other_procedure_detail.is-valid,
+.was-validated #other_procedure_detail:valid {
+    border-color: $input-border-color !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+.skd-procedure-card {
+    .form-control,
+    .form-select {
+        width: 100%;
+        box-shadow: none !important;
+    }
+}
+
+/* Fix: Remove green border from Procedure Date field */
+input[type="date"]:valid,
+input[type="date"]:focus,
+input[type="date"].form-control:valid,
+input[type="date"].form-control:focus,
+#procedure_date:valid,
+#procedure_date:focus {
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+    background-image: none !important;
+    outline: none !important;
+}
+
+.was-validated input[type="date"]:valid,
+.was-validated input[type="date"] {
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+// ── Suppress native browser :invalid red borders ─────────────────
+// We manage validation purely via .is-invalid (added by JS on submit).
+// Without this, required-but-empty fields show red on page load
+// before the user has interacted with anything.
+input:invalid:not(.is-invalid),
+select:invalid:not(.is-invalid),
+textarea:invalid:not(.is-invalid) {
+    border-color: $input-border-color !important;
+    box-shadow: none !important;
+    background-image: none !important;
+    background-color: transparent !important;
+}
+
+// Also suppress under .was-validated (if Odoo ever adds this class)
+.was-validated input:invalid:not(.is-invalid),
+.was-validated select:invalid:not(.is-invalid),
+.was-validated textarea:invalid:not(.is-invalid) {
+    border-color: $input-border-color !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+// ── WYSIWYG editor validation border ─────────────────────────────
+// loadWysiwygFromTextarea mounts the OWL Wysiwyg component INSIDE
+// .o_wysiwyg_textarea_wrapper, clearing it and replacing with the
+// editor. We mark that wrapper with .is-invalid so the red border
+// wraps the entire visible editor block.
+// Bootstrap's .is-invalid only targets input/select/textarea, so
+// we must explicitly add the border rule for this div.
+.o_wysiwyg_textarea_wrapper.is-invalid {
+    border: 1px solid #dc3545 !important;
+    border-radius: 0.375rem;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+// Also handle odoo-editor-container in case Odoo version differs
+.odoo-editor-container.is-invalid {
+    border: 1px solid #dc3545 !important;
+    border-radius: 0.375rem;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+.odoo-editor-container.is-invalid .odoo-editor-editable {
+    outline: none;
+}

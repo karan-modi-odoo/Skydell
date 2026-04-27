@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_doctor_registration_manager,doctor.registration.manager,model_doctor_registration,adx_doctor_registration_portal.group_doctor_manager,1,1,1,1
+access_doctor_registration_user,doctor.registration.user,model_doctor_registration,base.group_user,1,0,0,0
+access_doctor_reject_wizard_manager,registration.reject.wizard.manager,model_registration_reject_wizard,adx_doctor_registration_portal.group_doctor_manager,1,1,1,1
+access_doctor_reject_wizard_user,registration.reject.wizard.user,model_registration_reject_wizard,base.group_user,1,1,1,1
+access_country_compliance_manager,country.compliance.manager,model_country_compliance,adx_doctor_registration_portal.group_doctor_manager,1,1,1,1
+access_country_compliance_user,country.compliance.user,model_country_compliance,base.group_user,1,0,0,0
+access_country_compliance_public,country.compliance.public,model_country_compliance,base.group_public,1,0,0,0
+access_doctor_specialty_manager,doctor.specialty.manager,model_doctor_specialty,adx_doctor_registration_portal.group_doctor_manager,1,1,1,1
+access_doctor_specialty_user,doctor.specialty.user,model_doctor_specialty,base.group_user,1,0,0,0
+access_doctor_specialty_portal,doctor.specialty.portal,model_doctor_specialty,base.group_portal,1,0,0,0
+access_doctor_specialty_public,doctor.specialty.public,model_doctor_specialty,base.group_public,1,0,0,0

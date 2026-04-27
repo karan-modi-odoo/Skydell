@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add doctor fields to partner form view -->
+    <!-- Confirmed: base.view_partner_form, category_id exists at line 210 -->
+    <record id="view_res_partner_inherit_doctor" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.doctor</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="is_doctor" readonly="1"/>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="before">
+                <page string="Medical Information" name="medical_info_tab" invisible="not is_doctor" >
+                    <group>
+                        <group string="Specialty &amp; Experience">
+                            <field name="specialty_id" readonly="1"/>
+                            <field name="experience" readonly="1"/>
+                        </group>
+                        <group string="License Information">
+                            <field name="license_number" readonly="1"/>
+                            <field name="license_document" filename="license_filename" invisible="1"/>
+                            <field name="license_document_ids" widget="many2many_binary" string="License Documents" readonly="1"/>
+                            <field name="license_expiry_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Expiry Reminders" >
+                            <label for="reminder_1_days" string="Reminder 1" />
+                            <div class="d-flex align-items-center gap-2">
+                                <field name="reminder_1_days" nolabel="1" style="max-width:80px;"/>
+                                <span class="text-muted">days before expiry</span>
+                            </div>
+                            <label for="reminder_2_days" string="Reminder 2"/>
+                            <div class="d-flex align-items-center gap-2">
+                                <field name="reminder_2_days" nolabel="1" style="max-width:80px;"/>
+                                <span class="text-muted">days before expiry</span>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+                <page string="Compliance" name="compliance_tab" invisible="not is_doctor">
+                    <group>
+                        <field name="compliance_id" readonly="1"/>
+                        <field name="compliance_accepted" readonly="1"/>
+                        <field name="compliance_accepted_on" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add doctor filters to partner search view -->
+    <!-- Confirmed: base.view_res_partner_filter, filter[@name='inactive'] exists -->
+    <record id="res_partner_view_search_is_doctor" model="ir.ui.view">
+        <field name="name">res.partner.search.is.doctor</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator/>
+                <filter string="Is Doctor"
+                        name="is_doctor"
+                        domain="[('is_doctor', '=', True)]"/>
+                <filter string="Accepted Compliance"
+                        name="compliance_accepted"
+                        domain="[('compliance_accepted', '=', True)]"/>
+                <filter string="Compliance Pending"
+                        name="compliance_pending"
+                        domain="[('is_doctor', '=', True), ('compliance_accepted', '=', False)]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

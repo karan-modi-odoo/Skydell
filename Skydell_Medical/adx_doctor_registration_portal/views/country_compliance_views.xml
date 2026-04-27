@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_country_compliance_search" model="ir.ui.view">
+        <field name="name">country.compliance.search</field>
+        <field name="model">country.compliance</field>
+        <field name="arch" type="xml">
+            <search string="Compliance">
+                <field name="name"/>
+                <field name="country_id"/>
+                <separator/>
+                <filter string="Has Description"
+                        name="filter_description"
+                        domain="[('description', '!=', False)]"/>
+                <group expand="0" name="group_by" string="Group By">
+                    <filter string="Country"
+                            name="group_by_country"
+                            context="{'group_by': 'country_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_country_compliance_tree" model="ir.ui.view">
+        <field name="name">country.compliance.tree</field>
+        <field name="model">country.compliance</field>
+        <field name="arch" type="xml">
+            <list string="Compliance">
+                <field name="name"/>
+                <field name="country_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_country_compliance_form" model="ir.ui.view">
+        <field name="name">country.compliance.form</field>
+        <field name="model">country.compliance</field>
+        <field name="arch" type="xml">
+            <form string="Compliance">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="country_id"/>
+                        <field name="description" required="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_country_compliance" model="ir.actions.act_window">
+        <field name="name">Compliance</field>
+        <field name="res_model">country.compliance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_country_compliance"
+              name="Compliance"
+              parent="menu_doctor_configuration"
+              action="action_country_compliance"
+              groups="adx_doctor_registration_portal.group_doctor_manager"
+              sequence="10"/>
+</odoo>

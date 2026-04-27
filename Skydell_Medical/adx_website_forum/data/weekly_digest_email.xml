@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="weekly_digest_email_template" model="mail.template">
+        <field name="name">Doctor Forum — Weekly Pro Digest</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Weekly Pro Digest: Top Discussions</field>
+        <field name="body_html" type="html">
+            <div style="margin:0; padding:0;">
+                <p style="font-size:13px;">
+                    Dear <t t-out="object.name or 'Doctor'"/>,
+                    <br/><br/>
+
+                    Here is your <strong>Weekly Pro Digest</strong> highlighting
+                    the most engaging discussions from the community this week.
+                    <br/><br/>
+
+                    <!-- Clinical Insight of the Week — auto-selected by engagement score -->
+                    <t t-if="ctx.get('insight_post')">
+                        <strong>🌟 Clinical Insight of the Week</strong><br/>
+                        Title: <t t-out="ctx.get('insight_post').name"/><br/>
+                        Author: <t t-out="ctx.get('insight_post').create_uid.name"/><br/>
+                        Engagement Score: <t t-out="ctx.get('insight_score')"/><br/>
+                        <a t-att-href="ctx.get('insight_post').website_url">Read Insight</a>
+                        <br/><br/>
+                    </t>
+
+                    <!-- Most Peer-Acknowledged Post -->
+                    <t t-if="ctx.get('most_liked_post')">
+                        <strong>❤️ Most Peer-Acknowledged Post</strong><br/>
+                        Title: <t t-out="ctx.get('most_liked_post').name"/><br/>
+                        Author: <t t-out="ctx.get('most_liked_post').create_uid.name"/><br/>
+                        Acknowledgments: <t t-out="ctx.get('most_liked_likes')"/><br/>
+                        Replies: <t t-out="ctx.get('most_liked_comments')"/><br/>
+                        <a t-att-href="ctx.get('most_liked_post').website_url">View Post</a>
+                        <br/><br/>
+                    </t>
+
+                    <!-- Most Discussed Post this week -->
+                    <t t-if="ctx.get('most_commented_post')">
+                        <strong>💬 Most Discussed Post</strong><br/>
+                        Title: <t t-out="ctx.get('most_commented_post').name"/><br/>
+                        Author: <t t-out="ctx.get('most_commented_post').create_uid.name"/><br/>
+                        Replies this week: <t t-out="ctx.get('most_commented_count')"/><br/>
+                        <a t-att-href="ctx.get('most_commented_post').website_url">View Post</a>
+                        <br/><br/>
+                    </t>
+
+                    We hope these discussions keep you engaged with the community.
+                    <br/><br/>
+                    Best regards,<br/>
+                    <t t-if="not is_html_empty(user.signature)">
+                        <t t-out="user.signature"/>
+                    </t>
+                    <t t-else="">
+                        <t t-out="user.name"/>
+                    </t>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

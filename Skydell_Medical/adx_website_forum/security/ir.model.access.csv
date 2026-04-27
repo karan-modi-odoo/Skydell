@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_forum_topic_type_internal,forum.topic.type.internal,model_forum_topic_type,base.group_user,1,1,1,1
+access_forum_topic_type_portal,forum.topic.type.portal,model_forum_topic_type,base.group_portal,1,0,0,0
+access_forum_topic_type_public,forum.topic.type.public,model_forum_topic_type,base.group_public,1,0,0,0
+access_procedure_type_internal,procedure.type.internal,model_procedure_type,base.group_user,1,1,1,1
+access_procedure_type_portal,procedure.type.portal,model_procedure_type,base.group_portal,1,0,0,0
+access_procedure_type_public,procedure.type.public,model_procedure_type,base.group_public,1,0,0,0
+access_product_template_portal,product.template.portal,product.model_product_template,base.group_portal,1,0,0,0
+access_product_template_public,product.template.public,product.model_product_template,base.group_public,1,0,0,0
+access_product_template_internal,product.template.internal,product.model_product_template,base.group_user,1,1,1,1

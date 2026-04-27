@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- ══════════════════════════════════════════════════
+             MAIN FEED LISTING PAGE
+        ══════════════════════════════════════════════════ -->
+        <template id="news_feed_page" name="Skydell News Feed">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'news_feed'"/>
+                <div class="skd-news-feed-page">
+
+                <!-- Google Fonts -->
+                <link rel="stylesheet"
+                      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&amp;family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"/>
+
+                <!-- ── Cinematic Hero ───────────────────── -->
+                <section class="skd-hero">
+
+                    <!-- Dark/Light Toggle -->
+                    <button class="skd-theme-toggle"
+                            id="skd-theme-toggle"
+                            title="Toggle dark/light mode"
+                            aria-label="Toggle dark/light mode">🌙
+                    </button>
+
+                    <div class="container">
+                        <!-- Live pill -->
+                        <div class="skd-hero-pill">
+                            <span class="skd-hero-pill-dot"/>
+                            Live Feed
+                        </div>
+
+                        <!-- Title with gradient accent -->
+                        <h1>Skydell
+                            <span>News Feed</span>
+                        </h1>
+                        <p>Curated medical research, industry updates and clinical insights — updated in real time.</p>
+
+                        <!-- Stats -->
+                        <div class="skd-hero-stats">
+                            <div class="skd-hero-stat">
+                                <span class="skd-hero-stat-num">
+                                    <t t-esc="len(feeds)"/>
+                                </span>
+                                <span class="skd-hero-stat-label">Sources</span>
+                            </div>
+                            <div class="skd-hero-stat-divider"/>
+                            <div class="skd-hero-stat">
+                                <span class="skd-hero-stat-num">
+                                    <t t-esc="sum(len(f.get('items',[])) for f in feeds)"/>
+                                </span>
+                                <span class="skd-hero-stat-label">Articles</span>
+                            </div>
+                            <div class="skd-hero-stat-divider"/>
+                            <div class="skd-hero-stat">
+                                <span class="skd-hero-stat-num">24/7</span>
+                                <span class="skd-hero-stat-label">Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── Feed Wrapper ──────────────────────── -->
+                <section class="skd-feed-wrapper">
+                    <div class="container">
+
+                        <t t-if="not feeds">
+                            <p class="skd-empty">
+                                No feeds configured yet. Add RSS feeds from the backend.
+                            </p>
+                        </t>
+
+                        <t t-foreach="feeds" t-as="feed">
+                            <div class="skd-feed-section">
+
+                                <!-- Section Header -->
+                                <div class="skd-section-header">
+                                    <h2 class="skd-section-title">
+                                        <t t-esc="feed.get('name', '')"/>
+                                    </h2>
+                                    <span class="skd-section-count">
+                                        <t t-esc="len(feed.get('items', []))"/>
+                                        article
+                                        <t t-if="len(feed.get('items', [])) != 1">s</t>
+                                    </span>
+                                </div>
+
+                                <!-- Cards -->
+                                <t t-if="feed.get('items')">
+                                    <div class="skd-card-grid">
+                                        <t t-foreach="feed.get('items', [])" t-as="item">
+                                            <a t-attf-href="/news-feed/article/#{item.get('id')}"
+                                               class="skd-card text-decoration-none">
+
+                                                <!-- Image OR gradient -->
+                                                <t t-if="item.get('image_url')">
+                                                    <div class="skd-card-img-wrap">
+                                                        <img class="skd-card-img"
+                                                             t-att-src="item.get('image_url')"
+                                                             alt=""
+                                                             loading="lazy"/>
+                                                    </div>
+                                                </t>
+                                                <t t-if="not item.get('image_url')">
+                                                    <div class="skd-card-no-img">
+                                                        <div class="skd-card-no-img-icon">📰</div>
+                                                    </div>
+                                                </t>
+
+                                                <!-- Body -->
+                                                <div class="skd-card-body">
+                                                    <t t-if="item.get('pub_date')">
+                                                        <div class="skd-card-date">
+                                                            <t t-esc="item.get('pub_date')"/>
+                                                        </div>
+                                                    </t>
+                                                    <div class="skd-card-title">
+                                                        <t t-esc="item.get('title', '')"/>
+                                                    </div>
+                                                    <t t-if="item.get('description')">
+                                                        <div class="skd-card-desc">
+                                                            <t t-out="item.get('description')"/>
+                                                        </div>
+                                                    </t>
+                                                    <div class="skd-card-footer">
+                                                        <span class="skd-card-link">Read More</span>
+                                                    </div>
+                                                </div>
+
+                                            </a>
+                                        </t>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <p class="skd-empty">No articles available yet.</p>
+                                </t>
+
+                            </div>
+                        </t>
+
+                    </div>
+                </section>
+
+                </div>
+            </t>
+        </template>
+
+        <!-- ══════════════════════════════════════════════════
+             ARTICLE DETAIL PAGE
+        ══════════════════════════════════════════════════ -->
+        <template id="news_feed_article_page" name="Skydell Article Detail">
+            <t t-call="website.layout">
+
+                <t t-set="hero_image"
+                   t-value="item.get('scraped_image') or item.get('image_url')"/>
+
+                <!-- Hero with image -->
+                <t t-if="hero_image">
+                    <section class="skd-detail-hero"
+                             t-attf-style="background-image:url('#{hero_image}');">
+                        <div class="skd-detail-hero-overlay">
+                            <div class="container">
+                                <div class="skd-detail-hero-inner">
+                                    <t t-if="item.get('feed_name')">
+                                        <span class="skd-detail-badge">
+                                            <t t-esc="item.get('feed_name')"/>
+                                        </span>
+                                    </t>
+                                    <h1 class="skd-detail-title">
+                                        <t t-esc="item.get('title', '')"/>
+                                    </h1>
+                                    <t t-if="item.get('pub_date')">
+                                        <div class="skd-detail-hero-date">
+                                            <t t-esc="item.get('pub_date')"/>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </t>
+
+                <!-- Hero no image -->
+                <t t-if="not hero_image">
+                    <section class="skd-hero">
+                        <div class="container">
+                            <t t-if="item.get('feed_name')">
+                                <div class="skd-detail-badge-plain">
+                                    <t t-esc="item.get('feed_name')"/>
+                                </div>
+                            </t>
+                            <h1 class="skd-hero-article-title">
+                                <t t-esc="item.get('title', '')"/>
+                            </h1>
+                            <t t-if="item.get('pub_date')">
+                                <div class="skd-hero-article-date">
+                                    <t t-esc="item.get('pub_date')"/>
+                                </div>
+                            </t>
+                        </div>
+                    </section>
+                </t>
+
+                <!-- Article Body -->
+                <section class="skd-detail-wrapper">
+                    <div class="container">
+                        <div class="skd-detail-container">
+
+                            <nav class="skd-breadcrumb" aria-label="breadcrumb">
+                                <a href="/news-feed">All Feeds</a>
+                                <span class="skd-breadcrumb-sep">/</span>
+                                <a href="/news-feed">
+                                    <t t-esc="item.get('feed_name', 'Feed')"/>
+                                </a>
+                                <span class="skd-breadcrumb-sep">/</span>
+                                <span class="skd-breadcrumb-active">
+                                    <t t-esc="item.get('title', '')"/>
+                                </span>
+                            </nav>
+
+                            <div class="skd-detail-meta">
+                                <t t-if="item.get('pub_date')">
+                                    <span class="skd-detail-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <rect x="3" y="4" width="18" height="18"
+                                                  rx="2" ry="2"/>
+                                            <line x1="16" y1="2" x2="16" y2="6"/>
+                                            <line x1="8" y1="2" x2="8" y2="6"/>
+                                            <line x1="3" y1="10" x2="21" y2="10"/>
+                                        </svg>
+                                        <t t-esc="item.get('pub_date')"/>
+                                    </span>
+                                </t>
+                                <t t-if="item.get('feed_name')">
+                                    <span class="skd-detail-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path d="M4 11a9 9 0 0 1 9 9"/>
+                                            <path d="M4 4a16 16 0 0 1 16 16"/>
+                                            <circle cx="5" cy="19" r="1"/>
+                                        </svg>
+                                        <t t-esc="item.get('feed_name')"/>
+                                    </span>
+                                </t>
+                            </div>
+
+                            <div class="skd-detail-body">
+                                <t t-if="item.get('scrape_success') and item.get('scraped_body')">
+                                    <t t-out="item.get('scraped_body')"/>
+                                </t>
+                                <t t-elif="item.get('description')">
+                                    <div class="skd-scrape-notice">
+                                        Full article could not be loaded. Showing RSS summary.
+                                    </div>
+                                    <t t-out="item.get('description')"/>
+                                </t>
+                                <t t-else="">
+                                    <p class="skd-empty">
+                                        No content available. Please visit the original article.
+                                    </p>
+                                </t>
+                            </div>
+
+                            <div class="skd-detail-footer">
+                                <t t-if="item.get('link')">
+                                    <a t-att-href="item.get('link')"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="skd-btn-primary">
+                                        Read Original Article ↗
+                                    </a>
+                                </t>
+                                <a href="/news-feed" class="skd-btn-secondary">
+                                    ← Back to News Feed
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </t>
+        </template>
+    </data>
+    <!-- ── Website Header Button — RSS Feeds ─────────── -->
+    <data noupdate="0">
+        <record id="website_menu_rss_feeds" model="website.menu">
+            <field name="name">Industry Updates</field>
+            <field name="url">/news-feed</field>
+            <field name="sequence">60</field>
+            <field name="parent_id" ref="website.main_menu"/>
+        </record>
+    </data>
+</odoo>

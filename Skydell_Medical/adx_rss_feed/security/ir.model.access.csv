@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rss_feed_internal,rss.feed internal,adx_rss_feed.model_rss_feed,base.group_user,1,1,1,1
+access_rss_feed_public,rss.feed public,adx_rss_feed.model_rss_feed,base.group_public,1,0,0,0
+access_rss_feed_item_internal,rss.feed.item internal,adx_rss_feed.model_rss_feed_item,base.group_user,1,1,1,1
+access_rss_feed_item_public,rss.feed.item public,adx_rss_feed.model_rss_feed_item,base.group_public,1,0,0,0

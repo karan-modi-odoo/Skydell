@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add topic_type_id and is_clinical_insight to backend list view -->
+    <!-- [B7] Confirmed: website_forum.forum_post_view_tree exists in Odoo 18 -->
+    <record id="view_forum_post_list_inherit" model="ir.ui.view">
+        <field name="name">forum.post.list.inherit.adx</field>
+        <field name="model">forum.post</field>
+        <field name="inherit_id" ref="website_forum.forum_post_view_tree"/>
+        <field name="arch" type="xml">
+            <!-- Confirmed: is_seo_optimized field exists in the list view -->
+            <xpath expr="//field[@name='is_seo_optimized']" position="after">
+                <field name="topic_type_id" optional="show"/>
+                <field name="is_clinical_insight" optional="show"
+                       widget="boolean_toggle"/>
+                <field name="is_procedure_post" optional="show"/>
+                <field name="procedure_type_id" optional="show"/>
+                <field name="product_used_id" optional="show"/>
+                <field name="date_performed" optional="show"/>
+                <field name="results" optional="show"/>
+                <field name="favourite_count" optional="hide"/>
+                <field name="vote_count" optional="hide"/>
+                <field name="specialty_id" optional="show"/>
+                <field name="duration" optional="show"/>
+                <field name="duration_unit" optional="show"/>
+                <field name="recovery_period_value" optional="show"/>
+                <field name="recovery_period_unit" optional="show"/>
+                <field name="recovery" optional="hide"/>
+                <field name="risks" optional="hide"/>
+                <field name="risk_level" optional="show"/>
+                <field name="doctor_experience" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add topic_type_id to backend search view -->
+    <record id="view_forum_post_search_inherit" model="ir.ui.view">
+        <field name="name">forum.post.search.inherit.adx</field>
+        <field name="model">forum.post</field>
+        <field name="inherit_id" ref="website_forum.forum_post_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="topic_type_id"/>
+            </xpath>
+            <xpath expr="//filter[@name='forum']" position="after">
+                <filter string="Topic Type"
+                        name="group_by_topic_type"
+                        context="{'group_by': 'topic_type_id'}"/>
+                <filter string="Clinical Insights"
+                        name="filter_clinical_insight"
+                        domain="[('is_clinical_insight', '=', True)]"/>
+
+
+                <!-- Filter : Procedure Type — -->
+                <filter string="Procedure Type"
+                        name="filter_by_procedure_type"
+                        domain="[('is_procedure_post', '=', True),('procedure_type_id', '!=', False)]"/>
+
+                <!-- Filter 2: Product Used — posts that have a product linked -->
+                <filter string="Product Used"
+                        name="filter_by_product_used"
+                        domain="[('is_procedure_post', '=', True),('product_used_id', '!=', False)]"/>
+
+                <!-- Filter : Procedure Rating Tracking -->
+                <filter string="Procedure Rating Tracking"
+                        name="filter_procedure_rating_tracking"
+                        domain="[('is_procedure_post', '=', True),('favourite_count', '>=', 1)]"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Procedure Type"
+                        name="group_by_procedure_type"
+                        domain="[]"
+                        context="{'group_by': 'procedure_type_id'}"/>
+
+                <filter string="Product Used"
+                        name="group_by_product_used"
+                        domain="[]"
+                        context="{'group_by': 'product_used_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

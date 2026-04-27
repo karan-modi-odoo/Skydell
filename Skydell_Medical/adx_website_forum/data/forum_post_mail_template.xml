@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_forum_comment" model="mail.template">
+        <field name="name">Doctor Forum — New Comment Notification</field>
+        <field name="model_id" ref="website_forum.model_forum_post"/>
+        <field name="subject">💬 New comment on your post: {{ object.name }}</field>
+        <field name="email_to">{{ object.create_uid.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin:0; padding:0;">
+                <p style="font-size:13px;">
+                    Dear <t t-out="object.create_uid.name or ''">Doctor</t>,
+                    <br/><br/>
+
+                    A new comment has been added to your post
+                    <strong><t t-out="object.name or ''"/></strong>
+                    in the <strong><t t-out="object.forum_id.name or ''"/></strong> forum.
+                    <br/><br/>
+
+                    <t t-if="ctx.get('commenter_name')">
+                        <strong>Comment by <t t-out="ctx.get('commenter_name')"/>:</strong>
+                        <div style="background:#f9f9f9; border-left:4px solid #875a7b;
+                                    padding:12px 15px; margin:10px 0; border-radius:4px;
+                                    color:#555;">
+                            <t t-out="ctx.get('comment_content') or ''"/>
+                        </div>
+                    </t>
+
+                    <a t-attf-href="{{ ctx.get('post_url', '') }}"
+                       style="background:#875a7b; color:white; padding:10px 24px;
+                              border-radius:5px; text-decoration:none;
+                              display:inline-block; font-size:13px;">
+                        View Post &amp; Reply
+                    </a>
+
+                    <br/><br/>
+                    Regards,<br/>
+                    <strong><t t-out="user.company_id.name or ''"/></strong>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>
